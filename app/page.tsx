@@ -1,59 +1,56 @@
-"use client";
-import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
+<!DOCTYPE html>
+<html>
+<head>
+<title>Excel Pro GH</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+body{background:#0a1931;color:white;font-family:Arial;text-align:center;margin:0;padding:20px}
+.btn{background:#ffcc00;color:black;padding:18px 30px;border-radius:50px;font-weight:900;border:none;font-size:18px;cursor:pointer;margin:10px}
+.card{background:white;color:black;padding:20px;border-radius:15px;max-width:400px;margin:20px auto}
+img{border-radius:50%;width:120px;border:4px solid #ffcc00}
+</style>
+</head>
+<body>
 
-const SUPABASE_URL = "https://ylspdrjrvhixrregmqtg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Ar8T3NCh77i6YZfjN88wBQ_f8j7oool";
-const PAYSTACK_KEY = "pk_live_f0406495db009afc29da2b4ac5d7a3cbdd4afb4d9dcd24"; // YOUR LIVE KEY - EDIT IF WRONG
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+<h1 style="color:#ffcc00">EXCEL PRO GH 🇬🇭</h1>
+<img src="https://cdn.jsdelivr.net/gh/kennysmithderulo-cmyk/Excelprogh@main/profile.jpg">
+<h2>Kenny Smith Derulo</h2>
+<p>Excel Expert for Ghanaian Businesses</p>
 
-const G = "https://cdn.jsdelivr.net/gh/kennysmithderulo-cmyk/Excelprogh@main";
+<div class="card">
+<h3>📊 Excel Mastery Pack</h3>
+<p>50+ Templates + Video Tutorials</p>
+<h2>₵50</h2>
+<button class="btn" onclick="pay(50,'Excel Pack')">💳 PAY WITH PAYSTACK</button>
+</div>
 
-export default function Home(){
-  const [paystackReady, setPaystackReady] = useState(false);
+<div class="card">
+<h3>📈 Business Dashboard</h3>
+<p>Sales + Inventory Dashboard</p>
+<h2>₵100</h2>
+<button class="btn" onclick="pay(100,'Dashboard')">💳 PAY ₵100</button>
+</div>
 
-  useEffect(()=>{
-    // Load Paystack script properly
-    const script = document.createElement("script");
-    script.src = "https://js.paystack.co/v1/inline.js";
-    script.onload = ()=> setPaystackReady(true);
-    document.body.appendChild(script);
-  },[]);
+<p>WhatsApp: 024 XXX XXXX | Accra, Ghana</p>
 
-  const pay = async (amount:number, name:string)=>{
-    if(!paystackReady){ alert("⏳ Paystack loading... wait 2 seconds and click again"); return; }
-    const email = prompt("Enter email for receipt:");
-    if(!email?.includes("@")) return alert("❌ Enter valid email");
-    
-    try{
-      // @ts-ignore
-      const handler = window.PaystackPop.setup({
-        key: PAYSTACK_KEY,
-        email,
-        amount: amount*100,
-        currency: "GHS",
-        ref: "EXCEL-"+Date.now(),
-        callback: async (res:any)=>{
-          alert("✅ Paid! Ref: "+res.reference+" Saving...");
-          const { error } = await supabase.from("sales").insert([{product:name, price:amount, email, paystack_ref:res.reference}]);
-          if(error) alert("❌ DB Error: "+error.message+" BUT payment success! Ref: "+res.reference);
-          else alert("🎉 SUCCESS! Saved to Supabase! Ref: "+res.reference);
-        },
-        onClose: ()=> alert("Payment closed")
-      });
-      handler.openIframe();
-    }catch(e:any){ alert("❌ Error: "+e.message); }
-  };
-
-  return (
-    <main className="min-h-screen bg-[#0a1931] text-white p-6">
-      <div className="max-w-5xl mx-auto text-center">
-        <h1 className="text-4xl font-black">EXCEL PRO GH - FIXED 🔥</h1>
-        <p className="mt-2">Paystack Ready: {paystackReady ? "✅ YES" : "⏳ Loading..."}</p>
-        <img src={`${G}/profile.jpg`} className="w-32 h-32 rounded-full mx-auto mt-6 border-4 border-yellow-400" alt="profile"/>
-        <button onClick={()=>pay(50,"Excel Pro")} className="mt-8 bg-yellow-400 text-black font-black px-10 py-5 rounded-full text-xl">💳 PAY ₵50 NOW - TEST IT!</button>
-        <p className="mt-4 text-xs opacity-50">Hardcoded keys - No Vercel env needed</p>
-      </div>
-    </main>
-  );
+<script>
+function pay(amount, product){
+  var email = prompt("Enter your email:");
+  if(!email || !email.includes("@")){ alert("Enter valid email"); return; }
+  var handler = PaystackPop.setup({
+    key: 'pk_live_f0406495db009afc29da2b4ac5d7a3cbdd4afb4d9dcd24', // REPLACE WITH YOUR FULL KEY
+    email: email,
+    amount: amount*100,
+    currency: 'GHS',
+    ref: 'EXCEL'+Date.now(),
+    callback: function(res){
+      alert("✅ Payment Success! Ref: "+res.reference+" - We will send "+product+" to "+email);
+    },
+    onClose: function(){ alert("Payment cancelled"); }
+  });
+  handler.openIframe();
 }
+</script>
+</body>
+</html>
