@@ -3,58 +3,78 @@ export const dynamic = 'force-dynamic'
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-const PRODUCTS = [
-  { id:1, name:"Data Cleaning Systems", price:200, img:"data-cleaning.jpg", result:"90% faster" },
-  { id:2, name:"Budget Tracker Ghana", price:150, img:"budget-tracker.jpg", result:"Save ₵500-₵1500/mo" },
-  { id:3, name:"Inventory + Invoice Makola", price:300, img:"inventory-invoice.jpg", result:"Best-seller Accra" },
-  { id:4, name:"Data Analytics Service", price:250, img:"data-analytics.jpg", result:"Data-driven growth" },
-  { id:5, name:"Website Developer", price:500, img:"website-developer.jpg", result:"Converts visitors" },
-  { id:6, name:"VA Assistant", price:400, img:"va-assistant.jpg", result:"Save 15+ hrs/week" },
-  { id:7, name:"Customer Support & Ops", price:350, img:"customer-support.jpg", result:"Ghana-based team" },
-];
+const G = "https://raw.githubusercontent.com/kennysmithderulo-cmyk/Excelprogh/main";
 
 export default function Home(){
-  const pay = (price:number, name:string) => {
-    const email = prompt(`Email for receipt for ${name} GHS ${price}:`);
+  const [loading, setLoading] = useState<string|null>(null);
+
+  const pay = (amount:number, name:string)=>{
+    const email = prompt("Enter email for receipt:");
     if(!email?.includes("@")) return alert("Valid email needed");
+    // @ts-ignore
+    if(!window.PaystackPop) return alert("Paystack not loaded, refresh");
+    setLoading(name);
     // @ts-ignore
     const handler = window.PaystackPop.setup({
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-      email, amount: price*100, currency:"GHS",
-      ref: "EXCELPRO_"+Date.now(),
+      email,
+      amount: amount*100,
+      currency: "GHS",
+      ref: "EXCEL-"+Date.now(),
       callback: async (res:any)=>{
-        alert(`✅ Paid! Ref ${res.reference}`);
-        await supabase.from("leads").insert({ email, product_interest: `${name} PAID GHS${price} Ref:${res.reference}`, budget:`GHS ${price}`, status:"paid" });
-        window.open(`https://wa.me/233548097756?text=${encodeURIComponent(`🔥 NEW SALE ${name} GHS${price} Ref:${res.reference} Customer:${email}`)}`,"_blank");
+        try{
+          await supabase.from("sales").insert([{product:name,price:amount,email,paystack_ref:res.reference}]);
+          alert("✅ Paid! Ref: "+res.reference);
+        }catch{ alert("Paid! But DB save failed"); }
+        setLoading(null);
       },
-      onClose: ()=> alert("Cancelled")
+      onClose: ()=>setLoading(null)
     });
     handler.openIframe();
   };
 
+  const items = [
+    {name:"Data Cleaning Systems", price:250, desc:"Clean 1000s rows in 5min", img:`${G}/data-cleaning.jpg`},
+    {name:"Budget Tracker Ghana", price:150, desc:"Save ₵500-₵1500/mo", img:`${G}/budget-tracker.jpg`},
+    {name:"Inventory + Invoice Makola", price:300, desc:"Best-seller Accra", img:`${G}/inventory-invoice.jpg`},
+    {name:"Data Analytics Service", price:350, desc:"Dashboard for SME", img:`${G}/data-analytics.jpg`},
+    {name:"Website Developer", price:500, desc:"Converts visitors", img:`${G}/website-developer.jpg`},
+    {name:"VA Assistant", price:400, desc:"Save 15+ hrs/week", img:`${G}/va-assistant.jpg`},
+    {name:"Customer Support & Ops", price:350, desc:"Ghana-based team", img:`${G}/customer-support.jpg`},
+  ];
+
   return (
-    <main>
-      <nav className="max-w-[1220px] m-auto p-5 flex justify-between"><span className="font-black text-gold text-xl">Excel Pro GH</span><a href="https://wa.me/233548097756" className="bg-gold text-[#091a33] px-5 py-2 rounded-full font-bold">Hire Me</a></nav>
-      <section className="max-w-[1220px] m-auto grid md:grid-cols-2 gap-8 p-6">
-        <div className="rounded-[30px] overflow-hidden"><img src="/profile.jpg" alt="Kenny" className="w-full h-[580px] object-cover"/></div>
-        <div>
-          <p className="text-gold font-bold text-xs tracking-widest">HELLO, I'M KENNY MURRAY</p>
-          <h1 className="text-4xl font-black mt-2">Data Analyst | <span className="text-gold">Website Developer</span> | Excel Systems Builder</h1>
-          <p className="text-slate-400 mt-4">Trusted by 25+ clients — 📧 contact.excelprogh@gmail.com | +233 548 097 756</p>
-          <div className="mt-6 flex flex-col gap-3 max-w-[400px]">
-            <a href="https://wa.me/233548097756" className="bg-gold text-black p-4 rounded-full font-black text-center">💬 WhatsApp: +233 548 097 756</a>
-          </div>
+    <main className="min-h-screen bg-[#0a1931] text-white">
+      <div className="max-w-5xl mx-auto p-6">
+        <h1 className="text-3xl font-bold">Excel Pro GH</h1>
+        <div className="mt-10">
+          <p className="tracking-widest opacity-70">HELLO, I&apos;M KENNY MURRAY</p>
+          <h2 className="text-5xl font-extrabold leading-tight mt-2">Data Analyst | Website Developer | Excel Systems Builder</h2>
+          <p className="mt-4 opacity-60">Trusted by 25+ clients — 📧 contact.excelprogh@gmail.com | +233 548 097 756</p>
+          <p className="mt-3 font-bold">💬 WhatsApp: +233 548 097 756</p>
         </div>
-      </section>
-      <section className="max-w-[1220px] m-auto p-6 grid md:grid-cols-3 gap-6">
-        {PRODUCTS.map(p=>(
-          <div key={p.id} className="bg-[#132a4e] rounded-3xl overflow-hidden border border-[#1d3a6b]">
-            <img src={`/${p.img}`} className="h-[200px] w-full object-cover"/>
-            <div className="p-5"><h3 className="font-bold">{p.name}</h3><div className="flex justify-between mt-4"><span>{p.result}</span><button onClick={()=>pay(p.price,p.name)} className="price">→ ₵{p.price} Pay</button></div></div>
-          </div>
-        ))}
-      </section>
-      <footer className="text-center p-10 text-slate-400">© 2026 Excel Pro GH — contact.excelprogh@gmail.com — Accra Ghana — Paystack LIVE + Supabase Dynamic</footer>
+
+        <div className="grid md:grid-cols-2 gap-6 mt-10">
+          {items.map(it=>(
+            <div key={it.name} className="bg-[#12264a] rounded-3xl overflow-hidden border border-white/10">
+              <img src={it.img} alt={it.name} className="w-full h-56 object-cover bg-[#0f2342]" />
+              <div className="p-5 flex justify-between items-center">
+                <div><p className="font-bold text-lg">{it.name}</p><p className="opacity-60 text-sm">{it.desc}</p></div>
+                <button onClick={()=>pay(it.price,it.name)} disabled={loading===it.name} className="bg-[#f4c542] text-black font-bold px-6 py-3 rounded-full">
+                  {loading===it.name?"...":`→ ₵${it.price} Pay`}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 bg-[#12264a] rounded-3xl overflow-hidden">
+          <img src={`${G}/profile.jpg`} alt="Kenny" className="w-full h-64 object-cover" onError={(e:any)=>e.target.style.display='none'} />
+          <img src={`${G}/personal-budget.jpg`} alt="budget" className="w-full h-64 object-cover mt-2" onError={(e:any)=>e.target.style.display='none'} />
+        </div>
+
+        <footer className="text-center py-12 opacity-50">© 2026 Excel Pro GH — contact.excelprogh@gmail.com — Accra Ghana — Paystack LIVE + Supabase Dynamic</footer>
+      </div>
     </main>
-  )
+  );
 }
