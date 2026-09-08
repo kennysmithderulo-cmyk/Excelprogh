@@ -1,11 +1,19 @@
 import "./globals.css";
-export const metadata = { title: "Excel Pro GH", description: "Excel Systems Ghana" };
+import Script from "next/script";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <script src="https://js.paystack.co/v1/inline.js"></script>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-RWN8J9ZMG4" strategy="afterInteractive" />
+        <Script id="ga-excelpro" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-RWN8J9ZMG4');
+          `}
+        </Script>
       </head>
       <body>{children}</body>
     </html>
