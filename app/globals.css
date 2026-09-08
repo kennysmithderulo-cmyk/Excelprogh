@@ -1,0 +1,4 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+:root{--bg:#091a33;--gold:#f4c542}
+body{background:#091a33;color:#eaf0ff;font-family:Inter,sans-serif}
+.price{background:#f4c542;color:#091a33;padding:8px 16px;border-radius:20px;font-weight:900;cursor:pointer}
