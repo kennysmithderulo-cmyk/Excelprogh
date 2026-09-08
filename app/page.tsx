@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-const G = "https://raw.githubusercontent.com/kennysmithderulo-cmyk/Excelprogh/main";
+const G = "https://cdn.jsdelivr.net/gh/kennysmithderulo-cmyk/Excelprogh@main";
 
 export default function Home(){
   const [loading, setLoading] = useState<string|null>(null);
