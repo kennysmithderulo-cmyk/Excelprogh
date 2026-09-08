@@ -1,139 +1,158 @@
 "use client";
 import { useState } from "react";
 
-const WA = "https://wa.me/233548097756?text=Hi%20Kenny%20-%20I%20need%20an%20Excel%20System";
-
-const services = [
-  { icon:"🧹", title:"Data Cleaning Systems", price:"₵200", desc:"Power Query automation that saves 96% of manual time. Clean 10k rows in 2 minutes.", badge:"BESTSELLER" },
-  { icon:"💰", title:"Budget Tracker Ghana", price:"₵150", desc:"Built for GHS, offline-first. Track sales, expenses & profit. Saves clients ₵500-1500/mo.", badge:"MAKOLA EDITION" },
-  { icon:"🧾", title:"Auto Inventory + Invoice", price:"₵300", desc:"Makola proven: 1,248 items, low-stock alerts, auto invoice INV-02389 generator.", badge:"BUSINESS" },
-  { icon:"📊", title:"Sales Dashboard System", price:"₵250", desc:"CEO dashboard with charts, profit/loss, top products. Used in 40+ projects.", badge:"DASHBOARD" },
-  { icon:"⚙️", title:"Business Automation", price:"₵350", desc:"Excel VBA + Python. Auto reports, auto WhatsApp, zero manual work.", badge:"AUTOMATION" },
-  { icon:"🚀", title:"Website + Excel Integration", price:"₵500", desc:"React, Next.js, Supabase. Your Excel becomes a full website/app.", badge:"FULL-STACK" },
+// YOUR 7 CARDS - EXACTLY LIKE YOUR SCREENSHOTS
+const systems = [
+  {
+    img: "/data-cleaning.png",
+    title: "Data Cleaning Systems",
+    sub: "Power Query • 96% Time Saved",
+    desc: "Messy 10,000+ rows → clean in 1 click. 4hrs → 12min.",
+    tags: ["Excel","Power Query","Automation"],
+    result: "90% faster.",
+    price: "₵200",
+    icon: "🧹"
+  },
+  {
+    img: "/budget.png",
+    title: "Budget Tracker — Ghana Edition",
+    sub: "GHS ₵ • Monthly Tracking",
+    desc: "Income ₵12,400 / Expenses ₵8,650 / Savings ₵3,750. Goal 94%.",
+    tags: ["Budgeting","GHS ₵","Dashboard"],
+    result: "Save ₵500-₵1500/mo.",
+    price: "₵150",
+    icon: "💰"
+  },
+  {
+    img: "/inventory.png",
+    title: "Inventory + Invoice — Makola",
+    sub: "Ghana Shops • Low Stock Alerts",
+    desc: "1,248 stock, ₵85,420 sales, INV-02389. Offline. Makola, Abossey Okai.",
+    tags: ["Inventory","Invoice","GHS ₵"],
+    result: "Best-seller Accra.",
+    price: "₵300",
+    icon: "🧾"
+  },
+  {
+    img: "/analytics.png",
+    title: "Data Analytics",
+    sub: "KPIs • Reports",
+    desc: "Turn raw data into decisions. KPI dashboards, sales reports.",
+    tags: ["Analytics","Power BI"],
+    result: "",
+    price: "₵250",
+    icon: "📊"
+  },
+  {
+    img: "/sales.png",
+    title: "Sales Dashboard — Pro",
+    sub: "Daily Sales • Profit",
+    desc: "Track daily sales, best sellers, profit. Offline-ready.",
+    tags: ["Sales","Dashboard"],
+    result: "+30% visibility",
+    price: "₵250",
+    icon: "📈"
+  },
+  {
+    img: "/automation.png",
+    title: "Business Automation",
+    sub: "WhatsApp • Auto Alerts",
+    desc: "Auto invoices, low stock WhatsApp alerts, daily report to phone.",
+    tags: ["Automation","WhatsApp"],
+    result: "Save 5hrs/week",
+    price: "₵350",
+    icon: "⚡"
+  },
+  {
+    img: "/website.png",
+    title: "Website + Excel System",
+    sub: "React • Supabase • Excel",
+    desc: "Website + Excel backend. Like this site. Leads save auto.",
+    tags: ["Website","Supabase"],
+    result: "Online 24/7",
+    price: "₵500",
+    icon: "🌐"
+  },
 ];
 
 export default function Home(){
-  const [form, setForm] = useState({name:"", email:"", message:""});
-  const [loading, setLoading] = useState(false);
+  const [form,setForm]=useState({name:"",email:"",message:""});
+  const [sent,setSent]=useState(false);
 
-  const sendLead = async ()=>{
-    if(!form.name ||!form.email) return alert("Please enter name & contact");
-    setLoading(true);
-    try{
-      await fetch("/api/leads", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(form)});
-      alert("✅ Received! I will reply on WhatsApp in 5 minutes.");
-      setForm({name:"", email:"", message:""});
-    }catch{ alert("Failed, WhatsApp me directly"); }
-    setLoading(false);
-  };
+  const send = async()=>{
+    await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(form)});
+    setSent(true); setForm({name:"",email:"",message:""});
+    setTimeout(()=>setSent(false),3000);
+  }
 
-  return (
-    <div className="min-h-screen bg-[#070f26] text-white">
-      <nav className="sticky top-0 z-40 backdrop-blur-xl bg-[#070f26]/80 border-b border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#facc15] text-black font-black grid place-items-center">E</div>
-            <p className="font-black">Excel Pro GH</p>
-          </div>
-          <a href={WA} className="bg-white text-black font-bold px-6 py-2.5 rounded-full text-sm hover:bg-[#facc15] transition">Hire Me →</a>
-        </div>
-      </nav>
+  return(
+    <div className="bg-[#070f26] text-white min-h-screen">
+      {/* HEADER - same */}
+      <header className="flex justify-between items-center px-6 py-5 max-w-7xl mx-auto">
+        <div className="flex items-center gap-3 font-black text-lg"><span className="w-9 h-9 bg-[#facc15] text-black rounded-full grid place-items-center">E</span>Excel Pro GH</div>
+        <a href="#contact" className="bg-white text-black px-6 py-2.5 rounded-full font-bold text-sm">Hire Me →</a>
+      </header>
 
-      <section className="max-w-7xl mx-auto px-6 pt-12 md:pt-20 grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 className="text-[38px] md:text-[56px] font-black leading-[0.95] tracking-[-0.03em]">
-            I build Excel systems<br/><span className="text-[#facc15]">that run your business.</span>
-          </h1>
-          <p className="text-[17px] leading-relaxed text-white/60 mt-6">Data Analyst & Full-Stack Builder. I turn messy Makola records into automated dashboards, inventory & finance systems.</p>
-          <div className="flex gap-3 mt-8">
-            <a href="#work" className="bg-[#facc15] text-black font-black px-8 py-4 rounded-full">View My Work</a>
-            <a href={WA} className="border border-white/15 px-8 py-4 rounded-full font-bold">WhatsApp Me</a>
+      {/* PROFILE AT TOP - FIXED */}
+      <section className="px-6 max-w-7xl mx-auto pt-4 pb-10">
+        <div className="bg-[#101c39] border border-white/10 rounded-[32px] p-6 md:p-10 flex flex-col md:flex-row items-center gap-8">
+          <img src="/profile.jpg" alt="Kenny" className="w-[120px] h-[120px] md:w-[180px] md:h-[180px] rounded-[28px] object-cover border-4 border-[#facc15]" />
+          <div>
+            <h1 className="text-[32px] md:text-[54px] font-black leading-[0.95]">I build Excel<br/><span className="text-[#facc15]">systems that run your business.</span></h1>
+            <p className="text-white/50 mt-4 max-w-xl">Data Analyst & Full-Stack Builder. 5+ years turning messy Makola records into automated dashboards.</p>
+            <div className="flex gap-8 mt-6">
+              <div><p className="text-2xl font-black">5+</p><p className="text-[10px] text-white/40 tracking-widest">YEARS</p></div>
+              <div><p className="text-2xl font-black">40+</p><p className="text-[10px] text-white/40 tracking-widest">PROJECTS</p></div>
+              <div><p className="text-2xl font-black">25+</p><p className="text-[10px] text-white/40 tracking-widest">CLIENTS</p></div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <a href="#portfolio" className="bg-[#facc15] text-black px-6 py-3 rounded-full font-black text-sm">View My Work →</a>
+              <a href="https://wa.me/233548097756" className="bg-white/10 border border-white/10 px-6 py-3 rounded-full font-bold text-sm">WhatsApp Me</a>
+            </div>
           </div>
-          <div className="flex gap-10 mt-10 border-t border-white/[0.07] pt-8">
-            <div><p className="text-3xl font-black">5+</p><p className="text-xs opacity-50 uppercase">Years</p></div>
-            <div><p className="text-3xl font-black">40+</p><p className="text-xs opacity-50 uppercase">Projects</p></div>
-            <div><p className="text-3xl font-black">25+</p><p className="text-xs opacity-50 uppercase">Clients</p></div>
-          </div>
-        </div>
-        <div className="relative">
-          <img src="https://cdn.jsdelivr.net/gh/kennysmithderulo-cmyk/Excelprogh@main/profile.jpg" className="w-full max-w-[440px] h-[520px] object-cover rounded-[32px] border border-white/10 mx-auto" alt="Kenny Murray"/>
         </div>
       </section>
 
-      <section id="work" className="max-w-7xl mx-auto px-6 mt-28">
-        <h2 className="text-4xl font-black tracking-tight">Systems that make money</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {services.map((s,i)=>(
-            <div key={i} className="bg-[#101c39] border border-white/[0.07] rounded-[24px] p-7 hover:border-[#facc15]/30 transition-all hover:-translate-y-1">
-              <div className="flex justify-between">
-                <span className="text-[11px] font-black tracking-widest px-3 py-1 rounded-full bg-white/5 border border-white/10">{s.badge}</span>
-                <span className="text-2xl">{s.icon}</span>
+      {/* PORTFOLIO - PROPER LAYOUT LIKE YOUR SCREENSHOTS */}
+      <section id="portfolio" className="px-6 max-w-7xl mx-auto pb-16">
+        <h2 className="text-[36px] md:text-[56px] font-black text-center leading-[0.95]">My Portfolio — 7<br/>Best-Selling Systems</h2>
+        <p className="text-center text-white/40 mt-4 text-sm md:text-base">Built for Ghana, priced in GHS ₵, offline-ready, no subscription</p>
+
+        <div className="grid md:grid-cols-2 gap-6 mt-10">
+          {systems.map((s)=>(
+            <div key={s.title} className="bg-[#111d3c] border border-[#facc15]/20 rounded-[28px] overflow-hidden hover:border-[#facc15]/40 transition">
+              {/* BIG IMAGE ON TOP LIKE YOUR PREVIOUS ONE */}
+              <div className="bg-[#0b1733] p-2">
+                <img src={s.img} alt={s.title} className="w-full h-[260px] object-cover rounded-[18px] border border-yellow-500/20" />
               </div>
-              <h3 className="text-[20px] font-bold mt-6 leading-tight">{s.title}</h3>
-              <p className="text-[13px] leading-relaxed text-white/50 mt-3 min-h-[56px]">{s.desc}</p>
-              <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/[0.06]">
-                <p className="text-xl font-black">{s.price}</p>
-                <a href={`${WA}%20-%20${encodeURIComponent(s.title)}`} className="bg-white text-black text-sm font-bold px-5 py-2.5 rounded-full hover:bg-[#facc15] transition">WhatsApp →</a>
+              <div className="p-6">
+                <h3 className="flex items-center gap-2 font-bold text-[18px]"><span>{s.icon}</span>{s.title}</h3>
+                <p className="text-[#facc15] font-bold text-sm mt-2">{s.sub}</p>
+                <p className="text-white/50 text-[14px] mt-3 leading-6">{s.desc}</p>
+                <div className="flex gap-2 mt-4 flex-wrap">
+                  {s.tags.map(t=><span key={t} className="bg-[#1a274f] border border-white/10 text-white/60 px-3 py-1 rounded-full text-[11px]">{t}</span>)}
+                </div>
+                {s.result && <p className="mt-4 text-sm"><span className="font-bold">Result:</span> {s.result}</p>}
+                <p className="mt-2 text-[#facc15] font-black text-[18px]">→ {s.price}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="contact" className="max-w-7xl mx-auto px-6 mt-28 pb-20 grid md:grid-cols-2 gap-10">
-        <div>
-          <h2 className="text-[42px] font-black leading-[0.9] tracking-tight">Let's build your<br/>system in 48hrs.</h2>
-          <div className="mt-8 space-y-3 text-sm opacity-70">
-            <p>contact.excelprogh@gmail.com</p>
-            <p>+233 548 097 756</p>
-            <p>Accra, Ghana</p>
-          </div>
-        </div>
-        <div className="bg-[#101c39] border border-white/[0.07] rounded-[24px] p-7">
-          <input value={form.name} onChange={e=>setForm({...form, name:e.target.value})} placeholder="Your full name" className="w-full bg-[#070f26] border border-white/10 p-4 rounded-xl outline-none"/>
-          <input value={form.email} onChange={e=>setForm({...form, email:e.target.value})} placeholder="Email or WhatsApp number" className="w-full mt-3 bg-[#070f26] border border-white/10 p-4 rounded-xl outline-none"/>
-          <textarea value={form.message} onChange={e=>setForm({...form, message:e.target.value})} placeholder="What system do you need?" className="w-full mt-3 bg-[#070f26] border border-white/10 p-4 rounded-xl h-32 outline-none"/>
-          <button onClick={sendLead} className="w-full mt-4 bg-[#facc15] text-black font-black py-4 rounded-full">{loading?"Sending...":"Send Message →"}</button>
+      {/* CONTACT - keep */}
+      <section id="contact" className="px-6 max-w-2xl mx-auto pb-20">
+        <h3 className="text-3xl font-black text-center">Let's build your system<br/>in 48hrs.</h3>
+        <div className="mt-8 bg-[#101c39] border border-white/10 rounded-[24px] p-6">
+          <input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Your name" className="w-full bg-[#070f26] border border-white/10 rounded-full px-6 py-4 mb-3 outline-none" />
+          <input value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="WhatsApp / Email" className="w-full bg-[#070f26] border border-white/10 rounded-full px-6 py-4 mb-3 outline-none" />
+          <textarea value={form.message} onChange={e=>setForm({...form,message:e.target.value})} placeholder="What system do you need?" className="w-full bg-[#070f26] border border-white/10 rounded-[20px] px-6 py-4 h-28 outline-none" />
+          <button onClick={send} className="w-full mt-4 bg-[#facc15] text-black font-black py-4 rounded-full">{sent?"Sent! ✓":"Send Message →"}</button>
         </div>
       </section>
 
-      {/* PROFESSIONAL FOOTNOTE WITH © */}
-      <footer className="border-t border-white/[0.06] bg-[#050c20]">
-        <div className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-8">
-          <div>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#facc15] text-black font-black grid place-items-center text-sm">E</div>
-              <p className="font-black">Excel Pro GH</p>
-            </div>
-            <p className="text-sm text-white/50 mt-4 leading-relaxed">Building powerful Excel systems, dashboards and full-stack apps for businesses in Ghana and worldwide.</p>
-          </div>
-          <div>
-            <p className="font-bold text-sm">Services</p>
-            <ul className="mt-4 space-y-2 text-sm text-white/50">
-              <li>Data Cleaning Systems</li>
-              <li>Budget Tracker Ghana</li>
-              <li>Inventory + Invoice</li>
-              <li>Business Automation</li>
-            </ul>
-          </div>
-          <div>
-            <p className="font-bold text-sm">Contact</p>
-            <ul className="mt-4 space-y-2 text-sm text-white/50">
-              <li>contact.excelprogh@gmail.com</li>
-              <li>+233 548 097 756</li>
-              <li>Accra, Ghana</li>
-            </ul>
-          </div>
-        </div>
-        <div className="border-t border-white/[0.06]">
-          <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-3 text-[12px] text-white/40">
-            <p>© 2026 Excel Pro GH. All rights reserved. Built by Kenny Murray.</p>
-            <p>React • Next.js • Supabase • Tailwind CSS</p>
-          </div>
-        </div>
-      </footer>
-
-      <a href={WA} className="fixed bottom-6 right-6 bg-[#25D366] w-14 h-14 rounded-full grid place-items-center shadow-xl z-50">💬</a>
+      {/* CHAT BUBBLE - FIXED TO LEFT */}
+      <a href="https://wa.me/233548097756" className="fixed bottom-6 left-6 bg-[#25D366] w-14 h-14 rounded-full grid place-items-center text-2xl shadow-2xl">💬</a>
     </div>
   )
 }
