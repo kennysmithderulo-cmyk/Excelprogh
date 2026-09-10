@@ -2,61 +2,130 @@
 import { useState } from "react";
 
 const portfolio = [
-  { title:"Inventory & Stock Manager", desc:"Track stock levels, low-stock alerts, supplier log, automated reports.", price:"GHS 1,200", badge:"BESTSELLER" },
-  { title:"Budget & Cashflow Planner", desc:"Monthly budget planning, cashflow forecast, variance analysis.", price:"GHS 1,100", badge:"" },
-  { title:"Project Tracker & CRM", desc:"Tasks, client pipeline, follow-up reminders, status tracker.", price:"GHS 1,350", badge:"BESTSELLER" },
-  { title:"Invoicing & Quotes System", desc:"Create invoices & quotes, client database, payment tracking.", price:"GHS 800", badge:"" },
-  { title:"Inventory Dashboard", desc:"Stock levels and reorder management - Logistics", price:"GHS 1,200", badge:"" },
-  { title:"Cashflow Planner", desc:"Cashflow forecast and monthly variance", price:"GHS 1,100", badge:"" },
-  { title:"Business Automation", desc:"WhatsApp alerts, auto invoices, daily reports - Save 5hrs/week", price:"GHS 1,350", badge:"" },
+  {
+    title:"Betslip Analyser",
+    desc:"Betting analytics system - Check wins/loses. Web App",
+    tag:"Website Development",
+    link:"https://betslip-analyser-check-lose-aiitx7ylt-kennysmithderulo-cmyk.vercel.app/",
+    image:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600"
+  },
+  {
+    title:"5-7 Hair Lounge",
+    desc:"Salon booking website - Modern booking system",
+    tag:"Website Development",
+    link:"https://5-7hair-lounge.vercel.app/",
+    image:"https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600"
+  },
+  {
+    title:"Inventory & Stock Manager",
+    desc:"Excel automation system for inventory tracking",
+    tag:"Excel Systems",
+    link:"#",
+    image:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600"
+  },
+  {
+    title:"Budget & Cashflow Planner",
+    desc:"Complete business finance management",
+    tag:"Excel Systems",
+    link:"#",
+    image:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600"
+  },
+  {
+    title:"Website Development",
+    desc:"Business sites, Landing pages, E-commerce + Excel dashboards as live websites. From GHS 1,500",
+    tag:"NEW SERVICE",
+    link:"#contact",
+    image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600"
+  },
 ];
 
 export default function Home(){
-  const [book,setBook]=useState({name:"",email:"",service:"Excel Automation"});
+  const [book,setBook]=useState({name:"",email:"",message:""});
   const [msg,setMsg]=useState("");
   const send = async()=>{
     const { createClient } = await import("@supabase/supabase-js");
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-    await supabase.from("bookings").insert(book);
-    setMsg("Booking sent! We'll contact you on WhatsApp."); setTimeout(()=>setMsg(""),4000);
+    await supabase.from("bookings").insert([book]);
+    setMsg("Booking sent! We'll contact you from Spintex, Accra soon.");
   }
   return(
-    <div className="bg-[#070f26] text-white">
-      <nav className="px-6 py-4 flex justify-between items-center border-b border-[#facc15]/20"><div className="font-black flex gap-2 items-center"><span className="bg-[#facc15] text-black w-8 h-8 grid place-items-center rounded">📊</span> Excel Pro GH</div><div className="hidden md:flex gap-6 text-sm text-white/60"><a href="#portfolio">Portfolio</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a></div><a href="#contact" className="bg-[#facc15] text-black px-5 py-2 rounded-full font-bold text-sm">Book Consultation</a></nav>
+    <div className="bg-[#070f26] text-white min-h-screen">
+      <nav className="px-6 py-4 flex justify-between">
+        <p className="font-bold">Excel Pro GH</p>
+        <div className="flex gap-4 text-sm">
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
 
       {/* PROFILE - ACCRA SPINTEX */}
-      <section className="px-6 max-w-7xl mx-auto py-12 grid md:grid-cols-3 gap-8 items-center">
+      <section className="px-6 max-w-7xl mx-auto py-10">
         <div className="text-center">
-          <div className="w-32 h-32 mx-auto rounded-full border-2 border-dashed border-[#facc15] grid place-items-center bg-white/5 overflow-hidden"><img src="/profile.jpg" alt="Profile" className="w-full h-full object-cover" /></div>
-          <p className="mt-4 bg-[#facc15] text-black text-xs font-black px-4 py-1.5 rounded-full inline-block">EXCEL PRO GH • SPINTEX, ACCRA</p>
-          <p className="text-white/40 text-xs mt-2">Trusted Excel Solutions Partner</p>
-        </div>
-        <div className="md:col-span-2">
-          <h1 className="text-[34px] md:text-[44px] font-black leading-[1]">I build <span className="text-[#facc15]">Excel systems</span> that run your business</h1>
-          <p className="text-white/60 text-sm mt-3">Custom Excel automation, dashboards, and business tools tailored for SMEs & enterprises in Ghana. Based in Spintex, Accra. Reliable. Efficient. Scalable.</p>
-          <div className="grid grid-cols-3 gap-4 mt-6">
-            <div className="bg-[#101c39] border border-[#facc15]/30 rounded-[12px] p-4"><p className="text-[#facc15] font-black text-xl">5+ years</p><p className="text-xs text-white/50">Experience</p></div>
-            <div className="bg-[#101c39] border border-[#facc15]/30 rounded-[12px] p-4"><p className="text-[#facc15] font-black text-xl">40+ projects</p><p className="text-xs text-white/50">Completed</p></div>
-            <div className="bg-[#101c39] border border-[#facc15]/30 rounded-[12px] p-4"><p className="text-[#facc15] font-black text-xl">25+ clients</p><p className="text-xs text-white/50">Satisfied</p></div>
+          <div className="w-32 h-32 mx-auto bg-[#101c46] rounded-full flex items-center justify-center">
+            <p className="text-4xl">📊</p>
           </div>
-          <div className="flex gap-3 mt-4"><a href="#contact" className="bg-[#facc15] text-black px-6 py-3 rounded-full font-black text-sm">Book Free Consultation →</a><a href="#portfolio" className="border border-[#facc15]/30 px-6 py-3 rounded-full text-sm">View Portfolio</a></div>
+          <p className="mt-4 bg-[#fac02f] text-black inline-block px-3 py-1 rounded text-sm">Spintex, Accra</p>
+          <p className="text-white/40 text-sm mt-2">contact.excelprogh@gmail.com</p>
+        </div>
+        <div className="md:col-span-2 mt-6">
+          <h1 className="text-[34px] font-bold">We Build Excel Systems + Modern Websites</h1>
+          <p className="text-white/60 mt-2">Excel automation, dashboards, and business websites. Business sites, booking systems, e-commerce, and converting Excel systems into live web apps.</p>
+          <div className="grid grid-cols-3 gap-3 mt-6">
+            <div className="bg-[#101c46] p-3 rounded">Excel Automation</div>
+            <div className="bg-[#101c46] p-3 rounded">Web Development</div>
+            <div className="bg-[#101c46] p-3 rounded">Business Systems</div>
+          </div>
+          <div className="flex gap-3 mt-6">
+            <a href="#portfolio" className="bg-[#fac02f] text-black px-6 py-3 rounded font-bold">View Portfolio</a>
+            <a href="#contact" className="border px-6 py-3 rounded">Contact Us</a>
+          </div>
         </div>
       </section>
 
-      <section id="portfolio" className="px-6 max-w-7xl mx-auto py-10"><h2 className="text-2xl font-black text-center">Our 7 Best-Selling Excel Systems</h2><div className="grid md:grid-cols-3 gap-4 mt-6">{portfolio.map(p=><div key={p.title} className="bg-[#111d3c] border border-[#facc15]/20 rounded-[14px] p-5 relative"><h3 className="font-bold text-sm">{p.title}</h3><p className="text-white/50 text-xs mt-2">{p.desc}</p><p className="text-[#facc15] font-black mt-3">{p.price}</p>{p.badge && <span className="absolute top-3 right-3 bg-[#facc15] text-black text-[10px] font-black px-2 py-1 rounded">{p.badge}</span>}</div>)}</div></section>
-
-      <section id="gallery" className="bg-[#0f1c3d] px-6 py-10"><div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8"><div><h3 className="font-black">Project Gallery</h3><p className="text-white/40 text-xs">Recent dashboards — Spintex, Accra clients</p><div className="grid grid-cols-2 gap-2 mt-4">{[1,2,3,4].map(i=><div key={i} className="h-20 bg-[#070f26] border border-[#facc15]/20 rounded-[8px] grid place-items-center text-xs text-white/30">Dashboard {i}</div>)}</div></div><div><h3 className="font-black">Testimonials</h3><div className="mt-4 bg-[#070f26] border border-white/10 rounded-[12px] p-4 text-xs text-white/60">"Excel Pro GH built our inventory system and reduced stock errors by 80%. Professional and reliable support." — Retail Owner, Spintex, Accra</div></div><div id="contact"><h3 className="font-black">Contact Information</h3><div className="mt-4 space-y-3 text-sm"><p>📞 +233 54 809 7756</p><p>✉️ contact.excelprogh@gmail.com</p><p>📍 Spintex, Accra, Ghana<br/><span className="text-white/40 text-xs">Business Hours: Mon - Fri, 9am - 5pm GMT</span></p><input value={book.name} onChange={e=>setBook({...book,name:e.target.value})} placeholder="Your Name" className="w-full bg-[#070f26] border border-white/10 rounded-full px-4 py-2.5 mt-2 outline-none text-sm" /><input value={book.email} onChange={e=>setBook({...book,email:e.target.value})} placeholder="Email / WhatsApp" className="w-full bg-[#070f26] border border-white/10 rounded-full px-4 py-2.5 mt-2 outline-none text-sm" /><button onClick={send} className="w-full bg-[#facc15] text-black font-black py-2.5 rounded-full text-sm mt-2">Send Message</button>{msg && <p className="text-[#facc15] text-xs mt-2">{msg}</p>}</div></div></div></section>
-
-      <footer className="bg-[#050d24] border-t border-[#facc15]/20 px-6 py-10">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
-          <div><p className="font-black">Excel Pro GH</p><p className="text-white/40 text-xs mt-2">We build Excel systems that run your business. Based in Spintex, Accra, Ghana.</p></div>
-          <div><p className="font-bold text-[#facc15] text-sm">Company</p><p className="text-white/50 text-xs mt-3 leading-6">About Us<br/>Portfolio<br/>Case Studies</p></div>
-          <div><p className="font-bold text-[#facc15] text-sm">Resources</p><p className="text-white/50 text-xs mt-3 leading-6">Excel Tips<br/>Template Library<br/>Support</p></div>
-          <div><p className="font-bold text-[#facc15] text-sm">Contact</p><p className="text-white/50 text-xs mt-3 leading-6">📍 Spintex, Accra, Ghana<br/>📞 +233 54 809 7756<br/>✉️ contact.excelprogh@gmail.com</p></div>
+      <section id="portfolio" className="px-6 max-w-7xl mx-auto py-16">
+        <h2 className="text-3xl font-bold">Portfolio - Excel + Websites</h2>
+        <p className="text-white/60 mt-2">Our real projects: Website Development + Excel Systems</p>
+        <div className="grid md:grid-cols-3 gap-6 mt-8">
+          {portfolio.map((p)=>(
+            <a key={p.title} href={p.link} target="_blank" className="bg-[#101c46] rounded-xl overflow-hidden hover:scale-105 transition">
+              <img src={p.image} className="h-48 w-full object-cover" />
+              <div className="p-4">
+                <span className="text-xs bg-[#fac02f] text-black px-2 py-1 rounded">{p.tag}</span>
+                <h3 className="font-bold mt-2">{p.title}</h3>
+                <p className="text-white/60 text-sm mt-1">{p.desc}</p>
+                <p className="text-[#fac02f] mt-3 text-sm">View Live →</p>
+              </div>
+            </a>
+          ))}
         </div>
-        <div className="text-center text-white/30 text-[11px] mt-10 border-t border-white/10 pt-4">© 2024 Excel Pro GH. All rights reserved. • Made in Spintex, Accra, Ghana 🇬🇭<br/>Email: contact.excelprogh@gmail.com • Phone: +233 54 809 7756 • Location: Spintex, Accra, Ghana</div>
+      </section>
+
+      <section id="gallery" className="px-6 max-w-7xl mx-auto py-10">
+        <h2 className="text-2xl font-bold">Gallery</h2>
+        <p className="text-white/50 text-sm">Upload more work via /admin - they will appear here automatically from Supabase</p>
+      </section>
+
+      <section id="contact" className="px-6 max-w-7xl mx-auto py-16">
+        <h2 className="text-2xl font-bold">Book Us - Spintex Accra</h2>
+        <div className="mt-6 max-w-md">
+          <input placeholder="Name" className="w-full p-3 rounded bg-[#101c46] mb-3" value={book.name} onChange={e=>setBook({...book,name:e.target.value})} />
+          <input placeholder="Email" className="w-full p-3 rounded bg-[#101c46] mb-3" value={book.email} onChange={e=>setBook({...book,email:e.target.value})} />
+          <textarea placeholder="Message - Excel or Website project?" className="w-full p-3 rounded bg-[#101c46] mb-3" value={book.message} onChange={e=>setBook({...book,message:e.target.value})} />
+          <button onClick={send} className="bg-[#fac02f] text-black w-full py-3 rounded font-bold">Send Booking</button>
+          <p className="mt-3 text-green-400">{msg}</p>
+        </div>
+      </section>
+
+      <footer className="bg-[#050d24] px-6 py-10 mt-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div><p className="font-bold mb-3">Excel Pro GH</p><p className="text-white/50 text-sm">Spintex, Accra<br/>contact.excelprogh@gmail.com</p></div>
+          <div><p className="font-bold mb-3">Company</p><div className="flex flex-col gap-2 text-sm text-white/60"><a href="/about" className="hover:text-white">About Us</a><a href="/portfolio" className="hover:text-white">Portfolio</a><a href="/case-studies" className="hover:text-white">Case Studies</a></div></div>
+          <div><p className="font-bold mb-3">Resources</p><div className="flex flex-col gap-2 text-sm text-white/60"><a href="/excel-tips" className="hover:text-white">Excel Tips</a><a href="/templates" className="hover:text-white">Template Library</a><a href="/support" className="hover:text-white">Support</a></div></div>
+          <div><p className="font-bold mb-3">Services</p><div className="flex flex-col gap-2 text-sm text-white/60"><p>Excel Systems</p><p>Website Development</p><p>Business Automation</p></div></div>
+        </div>
+        <div className="text-center text-white/30 text-sm mt-10">© 2026 Excel Pro GH - Spintex, Accra, Ghana</div>
       </footer>
-      <a href="https://wa.me/233548097756" className="fixed bottom-5 right-5 bg-[#25D366] px-5 py-3 rounded-full font-bold text-sm shadow-2xl">💬 Chat on WhatsApp</a>
+      <a href="https://wa.me/233548095000" className="fixed bottom-6 right-6 bg-green-500 p-4 rounded-full">WhatsApp</a>
     </div>
   )
 }
