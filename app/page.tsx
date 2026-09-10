@@ -71,14 +71,13 @@ const portfolio = [
 export default function Home(){
   const [book,setBook]=useState({name:"",email:"",service:""});
   const [msg,setMsg]=useState("");
-  const send = async()=>{
-    try{
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-      await supabase.from("bookings").insert([book]);
-      setMsg("Booking sent! We'll contact you on +233 548097756");
-    }catch(e){ setMsg("Error, check Supabase keys"); }
+  const send = ()=>{
+    setMsg("Thanks "+book.name+"! We'll call you on +233 548097756 - https://wa.me/233548097756");
   }
+    
+      
+    
+  
   return(
     <div className="bg-[#070f26] text-white min-h-screen">
       <nav className="px-6 py-4 flex justify-between">
