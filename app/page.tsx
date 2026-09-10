@@ -116,7 +116,15 @@ export default function Home(){
         </div>
       </section>
 
-      <footer className="bg-[#050d24] px-6 py-10 mt-10">
+            <footer className="bg-[#050d24] px-6 py-10 mt-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div><p className="font-bold mb-3">Excel Pro GH</p><p className="text-white/50 text-sm">Spintex, Accra<br/>contact.excelprogh@gmail.com<br/>+233 54 809 5000</p></div>
+          <div><p className="font-bold mb-3">Company</p><div className="flex flex-col gap-2 text-sm text-white/60"><a href="/about">About Us</a><a href="/portfolio">Portfolio</a><a href="/case-studies">Case Studies</a></div></div>
+          <div><p className="font-bold mb-3">Resources</p><div className="flex flex-col gap-2 text-sm text-white/60"><a href="/excel-tips">Excel Tips</a><a href="/templates">Template Library</a><a href="/support">Support</a></div></div>
+          <div><p className="font-bold mb-3">Services</p><div className="flex flex-col gap-2 text-sm text-white/60"><p>Excel Systems</p><p>Website Development</p><p>Business Automation</p></div></div>
+        </div>
+        <div className="text-center text-white/30 text-sm mt-10">© 2026 Excel Pro GH - Spintex, Accra</div>
+      </footer>
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           <div><p className="font-bold mb-3">Excel Pro GH</p><p className="text-white/50 text-sm">Spintex, Accra<br/>contact.excelprogh@gmail.com</p></div>
           <div><p className="font-bold mb-3">Company</p><div className="flex flex-col gap-2 text-sm text-white/60"><a href="/about" className="hover:text-white">About Us</a><a href="/portfolio" className="hover:text-white">Portfolio</a><a href="/case-studies" className="hover:text-white">Case Studies</a></div></div>
