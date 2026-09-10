@@ -1,0 +1,3 @@
+export default function ExcelTips(){
+ return <div className="bg-[#070f26] text-white min-h-screen p-10 pt-20"><h1 className="text-4xl font-bold">Excel Tips</h1><div className="mt-10 grid gap-4 max-w-3xl"><div className="bg-[#101c46] p-4 rounded">✅ Use XLOOKUP not VLOOKUP - faster</div><div className="bg-[#101c46] p-4 rounded">✅ Use Tables (Ctrl+T) for auto formulas</div><div className="bg-[#101c46] p-4 rounded">✅ Use Data Validation to prevent errors</div><div className="bg-[#101c46] p-4 rounded">✅ PivotTables for quick reports</div></div><a href="/" className="inline-block mt-10 text-[#fac02f]">Want us to build it for you? Contact →</a><br/><a href="/" className="inline-block mt-4 text-white/40">← Back Home</a></div>
+}
