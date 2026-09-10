@@ -1,3 +1,1 @@
-export default function CaseStudies(){
- return <div className="bg-[#070f26] text-white min-h-screen p-10 pt-20"><h1 className="text-4xl font-bold">Case Studies</h1><p className="text-white/60 mt-3">How we help businesses in Accra</p><div className="mt-10 space-y-6 max-w-3xl"><div className="bg-[#101c46] p-6 rounded-xl"><h3 className="font-bold">5-7 Hair Lounge - 60% more bookings</h3><p className="text-white/60 mt-2">We built a booking website. Customers now book online, no more lost WhatsApp messages.</p></div><div className="bg-[#101c46] p-6 rounded-xl"><h3 className="font-bold">Shop Inventory - Saved 10hrs/week</h3><p className="text-white/60 mt-2">Excel automation that tracks stock, sales, profit automatically.</p></div></div><a href="/" className="inline-block mt-10 text-white/40">← Back Home</a></div>
-}
+
