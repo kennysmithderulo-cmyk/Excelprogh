@@ -147,7 +147,7 @@ export default function Home(){
 
       <footer className="bg-[#050d24] px-6 py-10 mt-10 border-t border-white/5">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div><p className="font-bold mb-3">Excel Pro GH</p><p className="text-white/50 text-sm">Spintex, Accra<br/>By Kenny Murray<br/>contact.excelprogh@gmail.com<br/>+233 54 809 5000</p></div>
+          <div><p className="font-bold mb-3">Excel Pro GH</p><p className="text-white/50 text-sm">Spintex, Accra<br/>By Kenny Murray<br/>contact.excelprogh@gmail.com<br/>+233 54 809 7756</p></div>
           <div><p className="font-bold mb-3">Company</p><div className="flex flex-col gap-2 text-sm text-white/60"><a href="/about">About Us</a><a href="/portfolio">Portfolio (9)</a><a href="/case-studies">Case Studies</a></div></div>
           <div><p className="font-bold mb-3">Resources</p><div className="flex flex-col gap-2 text-sm text-white/60"><a href="/excel-tips">Excel Tips</a><a href="/templates">Template Library</a><a href="/support">Support</a></div></div>
           <div><p className="font-bold mb-3">Services</p><div className="flex flex-col gap-2 text-sm text-white/60"><p>2 Live Websites</p><p>Excel Systems</p><p>VA & Support</p></div></div>
@@ -155,7 +155,7 @@ export default function Home(){
         <div className="text-center text-white/30 text-sm mt-10">© 2026 Excel Pro GH - Kenny Murray - Spintex, Accra, Ghana</div>
       </footer>
 
-      <a href="https://wa.me/233548095000" className="fixed bottom-6 right-6 bg-green-500 p-4 rounded-full font-bold">WA</a>
+      <a href="https://wa.me/233548097756" className="fixed bottom-6 right-6 bg-green-500 p-4 rounded-full font-bold">WA</a>
     </div>
   )
             }
