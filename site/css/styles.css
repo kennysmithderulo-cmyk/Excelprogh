@@ -1,0 +1,258 @@
+/* Base & Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-dark: #0b0f14;
+  --bg-card: #111827;
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --blue-primary: #2563eb;
+  --blue-hover: #1d4ed8;
+  --gold-accent: #f5c14f;
+  --gold-hover: #e0a800;
+  --border-color: #1f2937;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(11, 15, 20, 0.9));
+  border-bottom: 1px solid var(--border-color);
+  padding: 80px 0 60px;
+  text-align: center;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--gold-accent);
+  box-shadow: 0 0 20px rgba(245, 193, 79, 0.3);
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  color: #ffffff;
+}
+
+.hero .title {
+  font-size: 1.1rem;
+  color: var(--gold-accent);
+  font-weight: 600;
+}
+
+.hero .tagline {
+  max-width: 700px;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-primary {
+  background: var(--blue-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--blue-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--gold-accent);
+  border: 1px solid var(--gold-accent);
+}
+
+.btn-secondary:hover {
+  background: rgba(245, 193, 79, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Sections */
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: #ffffff;
+  position: relative;
+  display: inline-block;
+}
+
+.section h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 60px;
+  height: 3px;
+  background: var(--gold-accent);
+  border-radius: 2px;
+}
+
+/* Skills */
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.skill-tag:hover {
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
+}
+
+/* Projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  border-color: var(--blue-primary);
+}
+
+.project-img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.project-card h3 {
+  padding: 14px 14px 6px;
+  font-size: 1.15rem;
+  color: #ffffff;
+}
+
+.project-card p {
+  padding: 0 14px 12px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.project-link {
+  display: inline-block;
+  margin: 0 14px 14px;
+  color: var(--blue-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.project-link:hover {
+  color: var(--blue-hover);
+  text-decoration: underline;
+}
+
+/* Contact */
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.contact-item {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.contact-item:hover {
+  color: var(--gold-accent);
+  text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+  padding: 24px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 1.7rem;
+  }
+  .hero .title {
+    font-size: 1rem;
+  }
+  .section h2 {
+    font-size: 1.5rem;
+  }
+    }
