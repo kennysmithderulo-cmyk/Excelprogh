@@ -1,116 +1,104 @@
+export const metadata = {
+  title: "Terms of Service | Excel Pro GH",
+  description: "Terms of Service for Excel Pro GH.",
+};
+
 export default function TermsPage() {
   return (
-    <div className="bg-[#070f26] text-white min-h-screen">
-      <nav className="px-6 py-4 flex justify-between items-center border-b border-white/10">
-        <a href="/" className="font-bold text-lg">
-          Excel Pro GH
-        </a>
-        <div className="flex gap-4 text-sm">
-          <a href="/#services" className="hover:text-white/80">
-            Services
+    <main className="min-h-screen bg-[#070f26] text-white">
+      <header className="border-b border-white/10">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+          <a href="/" className="text-lg font-bold">
+            Excel Pro GH
           </a>
-          <a href="/#portfolio" className="hover:text-white/80">
-            Portfolio
+          <a href="/" className="text-sm text-[#f4c542]">
+            Back to home
           </a>
-          <a href="/#contact" className="hover:text-white/80">
-            Contact
-          </a>
+        </nav>
+      </header>
+
+      <article className="mx-auto max-w-3xl px-6 py-16">
+        <p className="text-sm text-white/50">Last updated: 15 September 2026</p>
+        <h1 className="mt-3 text-4xl font-bold">Terms of Service</h1>
+
+        <div className="mt-10 space-y-8 text-white/70">
+          <section>
+            <h2 className="text-xl font-bold text-white">1. Services</h2>
+            <p className="mt-3 leading-8">
+              Excel Pro GH provides website development, Excel automation, data
+              cleaning, dashboard, virtual assistant, and customer support
+              services as agreed with each client.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white">
+              2. Proposals and pricing
+            </h2>
+            <p className="mt-3 leading-8">
+              Prices displayed on the website are starting prices unless stated
+              otherwise. Final pricing, deliverables, timelines, and payment
+              terms will be confirmed before work begins.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white">3. Client materials</h2>
+            <p className="mt-3 leading-8">
+              Clients are responsible for providing accurate information and
+              ensuring they have permission to use any logos, images, text,
+              documents, data, or other materials supplied to us.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white">4. Payments</h2>
+            <p className="mt-3 leading-8">
+              Deposits, milestone payments, subscriptions, and final payment
+              requirements will be stated in the applicable proposal or
+              agreement. Additional work outside the agreed scope may require an
+              additional fee.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white">
+              5. Delivery and revisions
+            </h2>
+            <p className="mt-3 leading-8">
+              Delivery dates depend on project scope and the timely provision of
+              required information or feedback. The number of included revision
+              rounds will be agreed for each project.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white">
+              6. Ownership and third-party services
+            </h2>
+            <p className="mt-3 leading-8">
+              Ownership of final project deliverables will be handled according
+              to the applicable agreement and payment status. Third-party
+              services, hosting, domains, plugins, and software may have their
+              own fees and terms.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white">7. Contact</h2>
+            <p className="mt-3 leading-8">
+              For questions about these terms, contact Excel Pro GH through{" "}
+              <a
+                href="https://wa.me/233548097756"
+                className="text-green-400 underline"
+              >
+                WhatsApp at +233 548097756
+              </a>
+              .
+            </p>
+          </section>
         </div>
-      </nav>
-
-      <main className="px-6 max-w-3xl mx-auto py-16">
-        <h1 className="text-3xl font-bold mb-6">Terms of Service</h1>
-
-        <p className="text-white/70 mb-4">
-          Last updated: 15 September 2026
-        </p>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">1. Services</h2>
-          <p className="text-white/80 mb-3">
-            Excel Pro GH provides website development, Excel and workflow
-            automation, data cleaning, dashboards, virtual assistant, and
-            customer support services as described on our website and in
-            individual proposals or agreements.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">2. Projects & pricing</h2>
-          <p className="text-white/80 mb-3">
-            Each project is scoped individually. Prices shown on the website are
-            starting prices and may change based on your specific requirements.
-            We will confirm final pricing and timelines before starting work.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">3. Payments</h2>
-          <p className="text-white/80 mb-3">
-            Payment terms (e.g., deposit and milestones) will be specified in
-            your project agreement. Work may begin after an agreed deposit is
-            received.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">4. Client responsibilities</h2>
-          <p className="text-white/80 mb-3">
-            To ensure smooth delivery, you agree to:
-          </p>
-          <ul className="list-disc pl-6 text-white/80 space-y-1">
-            <li>Provide accurate information and materials on time</li>
-            <li>Review and give feedback within reasonable timeframes</li>
-            <li>Ensure you have rights to any content you provide (logos, text, images)</li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">5. Intellectual property</h2>
-          <p className="text-white/80 mb-3">
-            Upon full payment, you own the final deliverables (website,
-            spreadsheets, dashboards) created specifically for your project.
-            We retain the right to reuse general methods, code snippets, and
-            know‑how across other projects.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">6. Support & maintenance</h2>
-          <p className="text-white/80 mb-3">
-            Support terms (duration, response times, what’s included) will be
-            agreed per project or support package. Anything beyond the agreed
-            scope may be billed separately.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">7. Limitation of liability</h2>
-          <p className="text-white/80 mb-3">
-            While we strive for high quality and reliability, we are not liable
-            for indirect or consequential losses (e.g., lost profits) arising
-            from the use of our services, except as required by law.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-3">8. Changes to these terms</h2>
-          <p className="text-white/80">
-            We may update these Terms from time to time. The latest version will
-            always be posted on this page.
-          </p>
-        </section>
-      </main>
-
-      <footer className="text-center py-10 text-white/50 text-sm border-t border-white/10">
-        Excel Pro GH • +233 548097756 • Accra, Ghana •{" "}
-        <a
-          href="https://wa.me/233548097756"
-          className="underline hover:text-white/70"
-        >
-          WhatsApp Us
-        </a>
-      </footer>
-    </div>
+      </article>
+    </main>
   );
 }
