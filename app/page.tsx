@@ -20,4 +20,24 @@
     <span className="text-green-400 font-bold">•</span>
     Ongoing support via WhatsApp, call, or remote sessions
   </li>
+
+      <footer className="text-center py-10 text-white/50 text-sm border-t border-white/10">
+  Excel Pro GH • +233 548097756 • Accra, Ghana •{" "}
+  <a
+    href="https://wa.me/233548097756"
+    className="underline hover:text-white/70"
+  >
+    WhatsApp Us
+  </a>
+  <span className="mx-2">•</span>
+  <a href="/privacy" className="underline hover:text-white/70">
+    Privacy
+  </a>
+  <span className="mx-2">•</span>
+  <a href="/terms" className="underline hover:text-white/70">
+    Terms
+  </a>
+</footer>
 </ul>
+
+
