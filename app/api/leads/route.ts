@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-const notificationEmail = "contact.excelprogh@gmail.com";
+const notificationEmail = "kennysmithderulo@gmail.com";
 
 export async function POST(request: Request) {
   try {
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
         const resend = new Resend(resendApiKey);
 
         const { error: emailError } = await resend.emails.send({
-          from: "Excel Pro GH Leads <onboarding@resend.dev>",
+          from: "Excel Pro GH <onboarding@resend.dev>",
           to: [notificationEmail],
           replyTo: email,
           subject: `New lead from ${name}`,
