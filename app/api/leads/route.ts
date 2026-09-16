@@ -7,10 +7,15 @@ export async function POST(request: Request) {
 
     const name =
       typeof body.name === "string" ? body.name.trim() : "";
+
     const email =
-      typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+      typeof body.email === "string"
+        ? body.email.trim().toLowerCase()
+        : "";
+
     const service =
       typeof body.service === "string" ? body.service.trim() : "";
+
     const message =
       typeof body.message === "string" ? body.message.trim() : "";
 
@@ -21,27 +26,15 @@ export async function POST(request: Request) {
       );
     }
 
-    if (name.length > 120 || email.length > 254) {
-      return NextResponse.json(
-        { error: "Please check the information you entered." },
-        { status: 400 }
-      );
-    }
-
-    if (service.length > 160 || message.length > 3000) {
-      return NextResponse.json(
-        { error: "Your message is too long. Please shorten it and try again." },
-        { status: 400 }
-      );
-    }
-
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseSecretKey = process.env.SUPABASE_SECRET_KEY;
 
     if (!supabaseUrl || !supabaseSecretKey) {
-      console.error("Missing Supabase environment variables.");
       return NextResponse.json(
-        { error: "The contact form is not configured yet. Please use WhatsApp." },
+        {
+          error:
+            "Contact form setup is incomplete. Please contact us on WhatsApp.",
+        },
         { status: 500 }
       );
     }
@@ -53,30 +46,52 @@ export async function POST(request: Request) {
       },
     });
 
-    const { error } = await supabase.from("leads").insert({
-      name,
-      email,
-      service: service || null,
-      message: message || null,
-    });
+    const { data, error } = await supabase
+      .from("leads")
+      .insert([
+        {
+          name,
+          email,
+          service: service || null,
+          message: message || null,
+          status: "new",
+        },
+      ])
+      .select("id")
+      .single();
 
     if (error) {
-      console.error("Supabase insert error:", error.message);
+      console.error("Supabase insert error:", {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code,
+      });
+
       return NextResponse.json(
-        { error: "We could not save your request. Please contact us on WhatsApp." },
+        {
+          error: `Database error: ${error.message}`,
+        },
         { status: 500 }
       );
     }
 
     return NextResponse.json(
-      { success: true, message: "Your request has been received." },
+      {
+        success: true,
+        leadId: data.id,
+        message: "Your request has been received.",
+      },
       { status: 201 }
     );
   } catch (error) {
     console.error("Lead API error:", error);
+
     return NextResponse.json(
-      { error: "Invalid request. Please try again." },
+      {
+        error: "The contact form received an invalid request. Please try again.",
+      },
       { status: 400 }
     );
   }
-        }
+}
