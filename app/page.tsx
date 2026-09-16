@@ -418,6 +418,17 @@ export default function Home() {
                   +233 548097756
                 </a>
               </p>
+
+              <p>
+                <span className="text-white/50">Email:</span>{" "}
+                <a
+                  href="mailto:contact.excelprogh@gmail.com"
+                  className="text-green-400 hover:underline"
+                >
+                  contact.excelprogh@gmail.com
+                </a>
+              </p>
+
               <p>
                 <span className="text-white/50">Location:</span> Accra, Ghana
               </p>
@@ -567,4 +578,4 @@ function SiteFooter() {
       </div>
     </footer>
   );
-  }
+                  }
