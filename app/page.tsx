@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const services = [
   {
@@ -108,37 +108,75 @@ export default function Home() {
   });
 
   const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const updateField = (
-    field: keyof typeof book,
-    value: string
-  ) => {
+  const updateField = (field: keyof typeof book, value: string) => {
     setBook((current) => ({
       ...current,
       [field]: value,
     }));
   };
 
-  const send = () => {
+  const send = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (!book.name.trim() || !book.email.trim()) {
       setStatus("Please enter your name and email address.");
       return;
     }
 
-    const whatsappMessage = encodeURIComponent(
-      `Hello Excel Pro GH. My name is ${book.name}. I need help with: ${
-        book.service || "a business project"
-      }. ${book.message}`
-    );
+    setIsSubmitting(true);
+    setStatus("");
 
-    window.open(
-      `https://wa.me/233548097756?text=${whatsappMessage}`,
-      "_blank"
-    );
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(book),
+      });
 
-    setStatus(
-      "Your request is ready in WhatsApp. Please send the message to complete your inquiry."
-    );
+      const result = await response.json();
+
+      if (!response.ok) {
+        setStatus(
+          result.error ||
+            "We could not save your request. Please contact us on WhatsApp."
+        );
+        return;
+      }
+
+      const whatsappMessage = encodeURIComponent(
+        `Hello Excel Pro GH. My name is ${book.name}. I need help with: ${
+          book.service || "a business project"
+        }. ${book.message || ""}`
+      );
+
+      setStatus(
+        "Your request has been saved. WhatsApp will now open so you can send a quick follow-up."
+      );
+
+      setBook({
+        name: "",
+        email: "",
+        service: "",
+        message: "",
+      });
+
+      window.open(
+        `https://wa.me/233548097756?text=${whatsappMessage}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } catch (error) {
+      console.error("Lead submission failed:", error);
+      setStatus(
+        "We could not connect to the contact form. Please contact us directly on WhatsApp."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -309,11 +347,7 @@ export default function Home() {
               key={project.title}
               href={project.link}
               target={project.link.startsWith("http") ? "_blank" : undefined}
-              rel={
-                project.link.startsWith("http")
-                  ? "noreferrer"
-                  : undefined
-              }
+              rel={project.link.startsWith("http") ? "noreferrer" : undefined}
               className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-[#f4c542]/50"
             >
               <img
@@ -366,165 +400,4 @@ export default function Home() {
               Tell us what your business needs.
             </h2>
             <p className="mt-5 leading-8 text-white/60">
-              Share a few details and we will help you choose the right
-              solution. You can also contact us directly on WhatsApp.
-            </p>
-
-            <div className="mt-8 space-y-4 text-white/80">
-              <p>
-                <span className="text-white/50">Phone:</span>{" "}
-                <a
-                  href="tel:+233548097756"
-                  className="text-green-400 hover:underline"
-                >
-                  +233 548097756
-                </a>
-              </p>
-              <p>
-                <span className="text-white/50">Location:</span> Accra, Ghana
-              </p>
-              <p>
-                <span className="text-white/50">Response time:</span> Usually
-                within 24 hours
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
-            <div className="grid gap-4">
-              <label className="grid gap-2 text-sm">
-                Your name
-                <input
-                  value={book.name}
-                  onChange={(event) =>
-                    updateField("name", event.target.value)
-                  }
-                  className="rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
-                  placeholder="e.g. Kojo Mensah"
-                />
-              </label>
-
-              <label className="grid gap-2 text-sm">
-                Email address
-                <input
-                  type="email"
-                  value={book.email}
-                  onChange={(event) =>
-                    updateField("email", event.target.value)
-                  }
-                  className="rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
-                  placeholder="you@example.com"
-                />
-              </label>
-
-              <label className="grid gap-2 text-sm">
-                What do you need?
-                <select
-                  value={book.service}
-                  onChange={(event) =>
-                    updateField("service", event.target.value)
-                  }
-                  className="rounded-lg border border-white/10 bg-[#111d38] p-3 outline-none focus:border-[#f4c542]"
-                >
-                  <option value="">Select a service</option>
-                  <option>Business website</option>
-                  <option>E-commerce website</option>
-                  <option>Excel automation</option>
-                  <option>Data cleaning</option>
-                  <option>Dashboard</option>
-                  <option>Virtual assistant or support</option>
-                  <option>Something else</option>
-                </select>
-              </label>
-
-              <label className="grid gap-2 text-sm">
-                Briefly describe your project
-                <textarea
-                  value={book.message}
-                  onChange={(event) =>
-                    updateField("message", event.target.value)
-                  }
-                  className="min-h-28 rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
-                  placeholder="Tell us what you want to build or improve."
-                />
-              </label>
-
-              <button
-                type="button"
-                onClick={send}
-                className="rounded-lg bg-[#f4c542] py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]"
-              >
-                Continue on WhatsApp
-              </button>
-
-              {status && (
-                <p className="text-sm leading-6 text-green-300">{status}</p>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
-  );
-}
-
-function SiteFooter() {
-  return (
-    <footer className="border-t border-white/10 px-6 py-12">
-      <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
-        <div>
-          <p className="text-lg font-bold">Excel Pro GH</p>
-          <p className="mt-3 max-w-sm text-sm leading-6 text-white/50">
-            Websites, Excel automation, dashboards, and business support for
-            growing businesses in Ghana.
-          </p>
-        </div>
-
-        <div>
-          <p className="font-semibold">Explore</p>
-          <div className="mt-3 grid gap-2 text-sm text-white/60">
-            <a href="/about" className="hover:text-white">
-              About us
-            </a>
-            <a href="#services" className="hover:text-white">
-              Services
-            </a>
-            <a href="#portfolio" className="hover:text-white">
-              Portfolio
-            </a>
-            <a href="#contact" className="hover:text-white">
-              Contact
-            </a>
-          </div>
-        </div>
-
-        <div>
-          <p className="font-semibold">Legal</p>
-          <div className="mt-3 grid gap-2 text-sm text-white/60">
-            <a href="/privacy" className="hover:text-white">
-              Privacy Policy
-            </a>
-            <a href="/terms" className="hover:text-white">
-              Terms of Service
-            </a>
-            <a
-              href="https://wa.me/233548097756"
-              target="_blank"
-              rel="noreferrer"
-              className="text-green-400 hover:text-green-300"
-            >
-              WhatsApp us
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto mt-10 max-w-6xl border-t border-white/10 pt-6 text-sm text-white/40">
-        © {new Date().getFullYear()} Excel Pro GH. All rights reserved. Accra,
-        Ghana.
-      </div>
-    </footer>
-  );
-          }
+              Share a few details and we
