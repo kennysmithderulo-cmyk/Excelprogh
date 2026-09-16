@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const services = [
   {
@@ -108,37 +108,75 @@ export default function Home() {
   });
 
   const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const updateField = (
-    field: keyof typeof book,
-    value: string
-  ) => {
+  const updateField = (field: keyof typeof book, value: string) => {
     setBook((current) => ({
       ...current,
       [field]: value,
     }));
   };
 
-  const send = () => {
+  const send = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (!book.name.trim() || !book.email.trim()) {
       setStatus("Please enter your name and email address.");
       return;
     }
 
-    const whatsappMessage = encodeURIComponent(
-      `Hello Excel Pro GH. My name is ${book.name}. I need help with: ${
-        book.service || "a business project"
-      }. ${book.message}`
-    );
+    setStatus("");
+    setIsSubmitting(true);
 
-    window.open(
-      `https://wa.me/233548097756?text=${whatsappMessage}`,
-      "_blank"
-    );
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(book),
+      });
 
-    setStatus(
-      "Your request is ready in WhatsApp. Please send the message to complete your inquiry."
-    );
+      const result = await response.json();
+
+      if (!response.ok) {
+        setStatus(
+          result.error ||
+            "We could not save your request. Please contact us on WhatsApp."
+        );
+        return;
+      }
+
+      const whatsappMessage = encodeURIComponent(
+        `Hello Excel Pro GH. My name is ${book.name}. I need help with: ${
+          book.service || "a business project"
+        }. ${book.message || ""}`
+      );
+
+      setStatus(
+        "Your request has been saved. WhatsApp will now open so you can send a quick follow-up."
+      );
+
+      setBook({
+        name: "",
+        email: "",
+        service: "",
+        message: "",
+      });
+
+      window.open(
+        `https://wa.me/233548097756?text=${whatsappMessage}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } catch (error) {
+      console.error("Lead submission failed:", error);
+      setStatus(
+        "We could not connect to the contact form. Please contact us directly on WhatsApp."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -391,10 +429,11 @@ export default function Home() {
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
-            <div className="grid gap-4">
+            <form onSubmit={send} className="grid gap-4">
               <label className="grid gap-2 text-sm">
                 Your name
                 <input
+                  required
                   value={book.name}
                   onChange={(event) =>
                     updateField("name", event.target.value)
@@ -407,6 +446,7 @@ export default function Home() {
               <label className="grid gap-2 text-sm">
                 Email address
                 <input
+                  required
                   type="email"
                   value={book.email}
                   onChange={(event) =>
@@ -450,17 +490,17 @@ export default function Home() {
               </label>
 
               <button
-                type="button"
-                onClick={send}
-                className="rounded-lg bg-[#f4c542] py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]"
+                type="submit"
+                disabled={isSubmitting}
+                className="rounded-lg bg-[#f4c542] py-3 font-bold text-[#070f26] hover:bg-[#ffd95c] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Continue on WhatsApp
+                {isSubmitting ? "Sending request..." : "Send Request"}
               </button>
 
               {status && (
                 <p className="text-sm leading-6 text-green-300">{status}</p>
               )}
-            </div>
+            </form>
           </div>
         </div>
       </section>
@@ -527,4 +567,4 @@ function SiteFooter() {
       </div>
     </footer>
   );
-}
+  }
