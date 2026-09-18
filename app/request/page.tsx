@@ -25,11 +25,12 @@ export default function RequestPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
 
-    const { error } = await supabase.from("client_requests").insert([
+    // Save to Supabase
+    const { error: dbError } = await supabase.from("client_requests").insert([
       {
         business_name: formData.businessName,
         email: formData.email,
@@ -41,19 +42,39 @@ export default function RequestPage() {
       },
     ]);
 
-    if (error) {
+    if (dbError) {
       setStatus("error");
-    } else {
-      setStatus("success");
-      setFormData({
-        businessName: "",
-        email: "",
-        phone: "",
-        service: "",
-        budget: "",
-        details: "",
-      });
+      return;
     }
+
+    // Send email notification (non-blocking)
+    try {
+      await fetch("/api/notify-new-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          business_name: formData.businessName,
+          email: formData.email,
+          phone: formData.phone,
+          service: formData.service,
+          budget: formData.budget,
+          details: formData.details,
+        }),
+      });
+    } catch (err) {
+      console.error("Email notification failed:", err);
+      // Don't fail the whole request if email fails
+    }
+
+    setStatus("success");
+    setFormData({
+      businessName: "",
+      email: "",
+      phone: "",
+      service: "",
+      budget: "",
+      details: "",
+    });
   };
 
   return (
