@@ -14,7 +14,6 @@
     "@supabase/supabase-js": "^2.44.4",
     "resend": "^6.0.0",
     "lucide-react": "^0.460.0"
-  }
 }
   },
   "devDependencies": {
