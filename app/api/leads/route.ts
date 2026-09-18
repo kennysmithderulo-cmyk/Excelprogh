@@ -84,11 +84,13 @@ export async function POST(request: Request) {
     }
 
     let emailSent = false;
+    let autoReplySent = false;
 
     if (resendApiKey) {
       try {
         const resend = new Resend(resendApiKey);
 
+        // 1. Notification to you
         const { error: emailError } = await resend.emails.send({
           from: "Excel Pro GH <onboarding@resend.dev>",
           to: [notificationEmail],
@@ -117,6 +119,39 @@ ${message || "No description provided."}
         } else {
           emailSent = true;
         }
+
+        // 2. Auto-reply to the client
+        const { error: autoReplyError } = await resend.emails.send({
+          from: "Excel Pro GH <onboarding@resend.dev>",
+          to: [email],
+          subject: "Thanks for contacting Excel Pro GH",
+          text:
+            `Hi ${name},
+
+` +
+            `Thank you for reaching out to Excel Pro GH. We have received your request and will get back to you soon.
+
+` +
+            `Your inquiry:
+` +
+            `Service: ${service || "Not selected"}
+` +
+            `Description: ${message || "No description provided."}
+
+` +
+            `Lead ID: ${lead.id}
+
+` +
+            `Best regards,
+` +
+            `Excel Pro GH Team`,
+        });
+
+        if (autoReplyError) {
+          console.error("Resend auto-reply error:", autoReplyError);
+        } else {
+          autoReplySent = true;
+        }
       } catch (emailError) {
         console.error("Resend notification failed:", emailError);
       }
@@ -128,6 +163,7 @@ ${message || "No description provided."}
       {
         success: true,
         emailSent,
+        autoReplySent,
         message: "Your request has been received.",
       },
       { status: 201 }
