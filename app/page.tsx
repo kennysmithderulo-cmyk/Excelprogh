@@ -417,8 +417,7 @@ export default function Home() {
                 >
                   +233 548097756
                 </a>
-              </p>
-
+              </p> 
               <p>
                 <span className="text-white/50">Email:</span>{" "}
                 <a
