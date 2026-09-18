@@ -168,19 +168,19 @@ iPhone: Share → Add to Home Screen`);
               automate systems, and provide virtual assistant services to help you grow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="#contact"
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center justify-center"
-              >
-                Request Service
-                <ChevronRight className="w-5 h-5 ml-2" />
-              </Link>
-              <button
-                onClick={handleInstallClick}
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-colors inline-flex items-center justify-center"
-              >
-                Install Excel Pro GH App
-              </button>
+            <Link
+  href="/request"
+  className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center justify-center"
+>
+  Request Service
+  <ChevronRight className="w-5 h-5 ml-2" />
+</Link>
+<button
+  onClick={handleInstallClick}
+  className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-colors inline-flex items-center justify-center"
+>
+  Install Excel Pro GH App
+</button>
             </div>
           </div>
         </div>
