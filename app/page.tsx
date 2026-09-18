@@ -21,16 +21,16 @@ export default function Home() {
     };
   }, []);
 
-    const handleInstallClick = async () => {
+  const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      alert(
+      const instructions =
         "To install this app:
 
 " +
-          "Android: Tap the three dots menu → Install app or Add to Home screen
+        "Android: Tap the three dots menu → Install app or Add to Home screen
 " +
-          "iPhone: In Safari, tap Share → Add to Home Screen"
-      );
+        "iPhone: In Safari, tap Share → Add to Home Screen";
+      alert(instructions);
       return;
     }
     deferredPrompt.prompt();
@@ -149,7 +149,8 @@ export default function Home() {
           </div>
         )}
       </nav>
-            {/* Hero Section */}
+
+      {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -216,7 +217,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-            {/* Process Section */}
+
+      {/* Process Section */}
       <section id="process" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -260,7 +262,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-            {/* Contact Section */}
+
+      {/* Contact Section */}
       <section id="contact" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -321,4 +324,4 @@ export default function Home() {
       </footer>
     </div>
   );
-}
+      }
