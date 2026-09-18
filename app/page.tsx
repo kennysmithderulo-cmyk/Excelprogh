@@ -23,14 +23,10 @@ export default function Home() {
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      const instructions =
-        "To install this app:
+      alert(`To install this app:
 
-" +
-        "Android: Tap the three dots menu → Install app or Add to Home screen
-" +
-        "iPhone: In Safari, tap Share → Add to Home Screen";
-      alert(instructions);
+Android: Menu → Install app or Add to Home screen
+iPhone: Share → Add to Home Screen`);
       return;
     }
     deferredPrompt.prompt();
@@ -324,4 +320,4 @@ export default function Home() {
       </footer>
     </div>
   );
-      }
+}
