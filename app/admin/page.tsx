@@ -1,297 +1,288 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Mail, Phone, MessageCircle, Search, Filter, X } from "lucide-react";
+import Link from "next/link";
 
-type Lead = {
-  id: number;
-  name: string;
-  email: string;
-  service: string | null;
-  message: string | null;
-  status: string | null;
+const supabase = createClient();
+
+type RequestRow = {
+  id: string;
   created_at: string;
+  business_name: string;
+  email: string;
+  phone: string;
+  service: string;
+  budget: string | null;
+  details: string;
+  status: string;
 };
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-
-const statuses = ["new", "contacted", "in_progress", "completed"];
-
-function formatStatus(status: string | null) {
-  if (!status) return "New";
-
-  return status
-    .replace("_", " ")
-    .replace(/\bw/g, (letter) => letter.toUpperCase());
-}
-
-export default function AdminLeadsPage() {
-  const router = useRouter();
-
-  const [leads, setLeads] = useState<Lead[]>([]);
+export default function AdminPage() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [requests, setRequests] = useState<RequestRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
+  const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all");
-  const [updatingId, setUpdatingId] = useState<number | null>(null);
+  const [selected, setSelected] = useState<RequestRow | null>(null);
 
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  // Simple password gate (change the password here)
+  const ADMIN_PASSWORD = "ExcelPro2026!";
 
-  const loadLeads = async () => {
+  useEffect(() => {
+    if (authenticated) {
+      loadRequests();
+    }
+  }, [authenticated]);
+
+  const loadRequests = async () => {
+    setLoading(true);
     const { data, error } = await supabase
-      .from("leads")
+      .from("client_requests")
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (error) {
-      setMessage(error.message);
-    } else {
-      setLeads(data || []);
+    if (!error && data) {
+      setRequests(data as RequestRow[]);
     }
-
     setLoading(false);
   };
 
-  useEffect(() => {
-    const checkAccess = async () => {
-      if (!supabaseUrl || !supabaseAnonKey) {
-        setMessage("Supabase is not configured in Vercel yet.");
-        setLoading(false);
-        return;
-      }
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user || user.email !== "kennysmithderulo@gmail.com") {
-        router.replace("/admin/login");
-        return;
-      }
-
-      await loadLeads();
-    };
-
-    checkAccess();
-  }, []);
-
-  const updateStatus = async (leadId: number, status: string) => {
-    setUpdatingId(leadId);
-    setMessage("");
-
-    const { error } = await supabase
-      .from("leads")
-      .update({ status })
-      .eq("id", leadId);
-
-    if (error) {
-      setMessage(error.message);
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      setAuthenticated(true);
     } else {
-      setLeads((current) =>
-        current.map((lead) =>
-          lead.id === leadId ? { ...lead, status } : lead
-        )
-      );
+      alert("Incorrect password");
     }
-
-    setUpdatingId(null);
   };
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
-    router.replace("/admin/login");
-    router.refresh();
-  };
-
-  const visibleLeads = leads.filter((lead) => {
-    const searchText = search.trim().toLowerCase();
-
+  const filtered = requests.filter((r) => {
+    const matchesFilter = filter === "All" || r.status === filter;
+    const q = search.toLowerCase();
     const matchesSearch =
-      !searchText ||
-      lead.name.toLowerCase().includes(searchText) ||
-      lead.email.toLowerCase().includes(searchText) ||
-      (lead.service || "").toLowerCase().includes(searchText);
-
-    const leadStatus = lead.status || "new";
-    const matchesFilter = filter === "all" || leadStatus === filter;
-
-    return matchesSearch && matchesFilter;
+      r.business_name.toLowerCase().includes(q) ||
+      r.email.toLowerCase().includes(q) ||
+      r.service.toLowerCase().includes(q);
+    return matchesFilter && matchesSearch;
   });
 
-  if (loading) {
+  const statuses = ["All", "New", "Quote Sent", "In Progress", "Completed"];
+
+  if (!authenticated) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#070f26] px-6 text-white">
-        <p className="text-white/70">Loading secure dashboard...</p>
-      </main>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-sm bg-white rounded-2xl p-6 border border-blue-100">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Admin Login</h1>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Enter admin password"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700"
+            >
+              Login
+            </button>
+            <Link href="/" className="block text-center text-blue-600 hover:underline">
+              Back to home
+            </Link>
+          </form>
+        </div>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#070f26] px-4 py-6 text-white sm:px-6">
-      <header className="mx-auto flex max-w-6xl flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-wider text-[#f4c542]">
-            Excel Pro GH
-          </p>
-          <h1 className="mt-1 text-2xl font-bold">Lead dashboard</h1>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Header */}
+      <header className="bg-white border-b border-blue-100 sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-bold text-gray-900">Client Requests</h1>
+            <Link href="/" className="text-blue-600 hover:underline text-sm">
+              Back to site
+            </Link>
+          </div>
 
-        <div className="flex gap-3">
-          <a
-            href="/"
-            className="rounded-lg border border-white/20 px-4 py-2 text-sm hover:bg-white/10"
-          >
-            View website
-          </a>
-          <button
-            onClick={signOut}
-            className="rounded-lg bg-[#f4c542] px-4 py-2 text-sm font-bold text-[#070f26] hover:bg-[#ffd95c]"
-          >
-            Sign out
-          </button>
+          {/* Search + Filter */}
+          <div className="mt-4 grid md:grid-cols-2 gap-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by business, email, or service"
+                className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Filter className="w-4 h-4 text-gray-400" />
+              <select
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                className="flex-1 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              >
+                {statuses.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
       </header>
 
-      <section className="mx-auto max-w-6xl py-6">
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm text-white/60">All leads</p>
-            <p className="mt-1 text-3xl font-bold text-[#f4c542]">
-              {leads.length}
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm text-white/60">New leads</p>
-            <p className="mt-1 text-3xl font-bold text-[#f4c542]">
-              {leads.filter((lead) => (lead.status || "new") === "new").length}
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm text-white/60">Completed</p>
-            <p className="mt-1 text-3xl font-bold text-[#f4c542]">
-              {
-                leads.filter(
-                  (lead) => (lead.status || "new") === "completed"
-                ).length
-              }
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-6 grid gap-3 md:grid-cols-[1fr_220px]">
-          <input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            className="rounded-lg border border-white/10 bg-white/10 p-3 text-white outline-none placeholder:text-white/40 focus:border-[#f4c542]"
-            placeholder="Search name, email, or service"
-          />
-
-          <select
-            value={filter}
-            onChange={(event) => setFilter(event.target.value)}
-            className="rounded-lg border border-white/10 bg-[#111d38] p-3 text-white outline-none focus:border-[#f4c542]"
-          >
-            <option value="all">All statuses</option>
-            <option value="new">New</option>
-            <option value="contacted">Contacted</option>
-            <option value="in_progress">In progress</option>
-            <option value="completed">Completed</option>
-          </select>
-        </div>
-
-        {message && (
-          <p className="mt-4 rounded-lg border border-red-400/30 bg-red-400/10 p-3 text-sm text-red-200">
-            {message}
-          </p>
-        )}
-
-        <div className="mt-6 grid gap-4">
-          {visibleLeads.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6 text-white/60">
-              No leads found.
-            </div>
+      {/* List */}
+      <main className="py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          {loading ? (
+            <p className="text-gray-600">Loading requests...</p>
+          ) : filtered.length === 0 ? (
+            <p className="text-gray-600">No requests found.</p>
           ) : (
-            visibleLeads.map((lead) => (
-              <article
-                key={lead.id}
-                className="rounded-xl border border-white/10 bg-white/5 p-5"
-              >
-                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                  <div>
-                    <h2 className="text-xl font-bold">{lead.name}</h2>
-                    <p className="mt-1 text-sm text-white/60">
-                      {new Date(lead.created_at).toLocaleString()}
-                    </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filtered.map((r) => (
+                <div
+                  key={r.id}
+                  className="bg-white rounded-xl p-4 border border-blue-100 hover:shadow-md cursor-pointer"
+                  onClick={() => setSelected(r)}
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="font-semibold text-gray-900">{r.business_name}</h3>
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full ${
+                        r.status === "New"
+                          ? "bg-blue-100 text-blue-700"
+                          : r.status === "Quote Sent"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : r.status === "In Progress"
+                          ? "bg-indigo-100 text-indigo-700"
+                          : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {r.status}
+                    </span>
                   </div>
-
-                  <select
-                    value={lead.status || "new"}
-                    disabled={updatingId === lead.id}
-                    onChange={(event) =>
-                      updateStatus(lead.id, event.target.value)
-                    }
-                    className="rounded-lg border border-[#f4c542]/40 bg-[#111d38] px-3 py-2 text-sm text-white outline-none focus:border-[#f4c542] disabled:opacity-60"
-                  >
-                    {statuses.map((status) => (
-                      <option key={status} value={status}>
-                        {formatStatus(status)}
-                      </option>
-                    ))}
-                  </select>
+                  <p className="text-sm text-gray-600 mb-1">{r.service}</p>
+                  <p className="text-xs text-gray-500">
+                    {new Date(r.created_at).toLocaleString()}
+                  </p>
                 </div>
-
-                <div className="mt-4 grid gap-3 text-sm text-white/80">
-                  <p>
-                    <span className="text-white/50">Email:</span>{" "}
-                    <a
-                      href={`mailto:${lead.email}`}
-                      className="text-green-400 hover:underline"
-                    >
-                      {lead.email}
-                    </a>
-                  </p>
-
-                  <p>
-                    <span className="text-white/50">Service:</span>{" "}
-                    {lead.service || "Not selected"}
-                  </p>
-
-                  <p className="whitespace-pre-wrap leading-6">
-                    <span className="text-white/50">Message:</span>{" "}
-                    {lead.message || "No description provided."}
-                  </p>
-
-                  <div className="flex flex-wrap gap-3 pt-2">
-                    <a
-                      href={`mailto:${lead.email}?subject=${encodeURIComponent(
-                        "Re: Your Excel Pro GH request"
-                      )}`}
-                      className="rounded-lg border border-white/20 px-3 py-2 text-sm hover:bg-white/10"
-                    >
-                      Email client
-                    </a>
-
-                    <a
-                      href={`https://wa.me/?text=${encodeURIComponent(
-                        `Hello ${lead.name}, this is Excel Pro GH following up on your request.`
-                      )}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-lg bg-green-500 px-3 py-2 text-sm font-semibold text-white hover:bg-green-600"
-                    >
-                      WhatsApp client
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))
+              ))}
+            </div>
           )}
         </div>
-      </section>
-    </main>
+      </main>
+
+      {/* Detail modal */}
+      {selected && (
+        <div className="fixed inset-0 bg-black/50 flex items-end md:items-center justify-center z-50">
+          <div className="bg-white w-full md:max-w-2xl md:rounded-2xl rounded-t-2xl max-h-[90vh] overflow-y-auto">
+            <div className="p-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white">
+              <h2 className="text-lg font-bold text-gray-900">{selected.business_name}</h2>
+              <button
+                onClick={() => setSelected(null)}
+                className="p-2 hover:bg-gray-100 rounded-full"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+
+            <div className="p-4 space-y-4">
+              <div className="grid md:grid-cols-2 gap-3">
+                <div>
+                  <p className="text-xs text-gray-500">Email</p>
+                  <a href={`mailto:${selected.email}`} className="text-blue-600 hover:underline">
+                    {selected.email}
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Phone</p>
+                  <a href={`tel:${selected.phone}`} className="text-blue-600 hover:underline">
+                    {selected.phone}
+                  </a>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs text-gray-500">Service</p>
+                <p className="text-gray-900">{selected.service}</p>
+              </div>
+
+              {selected.budget && (
+                <div>
+                  <p className="text-xs text-gray-500">Budget</p>
+                  <p className="text-gray-900">{selected.budget}</p>
+                </div>
+              )}
+
+              <div>
+                <p className="text-xs text-gray-500">Details</p>
+                <p className="text-gray-900 whitespace-pre-line">{selected.details}</p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={`https://wa.me/${selected.phone.replace(/s+/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-3 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700"
+                >
+                  <MessageCircle className="w-4 h-4 mr-1" />
+                  WhatsApp
+                </a>
+                <a
+                  href={`tel:${selected.phone}`}
+                  className="inline-flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700"
+                >
+                  <Phone className="w-4 h-4 mr-1" />
+                  Call
+                </a>
+                <a
+                  href={`mailto:${selected.email}`}
+                  className="inline-flex items-center px-3 py-2 bg-gray-800 text-white rounded-lg text-sm hover:bg-gray-900"
+                >
+                  <Mail className="w-4 h-4 mr-1" />
+                  Email
+                </a>
+              </div>
+
+              <div className="border-t pt-4">
+                <p className="text-sm font-semibold text-gray-900 mb-2">Update status</p>
+                <p className="text-xs text-gray-500 mb-2">
+                  (Status update logic will be added next)
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["New", "Quote Sent", "In Progress", "Completed"].map((s) => (
+                    <button
+                      key={s}
+                      disabled
+                      className="px-3 py-1.5 rounded-lg border text-sm disabled:opacity-50"
+                    >
+                      {s}
+                      {selected.status === s ? " ✓" : ""}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
-                                           }
+}
