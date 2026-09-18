@@ -21,7 +21,7 @@ export default function Home() {
     };
   }, []);
 
-  const handleInstallClick = async () => {
+    const handleInstallClick = async () => {
     if (!deferredPrompt) {
       alert(
         "To install this app:
