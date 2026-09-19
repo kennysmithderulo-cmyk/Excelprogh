@@ -3,35 +3,54 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json();
-    const { business_name, email, phone, service, budget, details } = body;
+    const body = await request.json();
 
-    await resend.emails.send({
-      from: "Excel Pro GH <onboarding@resend.dev>", // replace after domain setup
+    const businessName = String(body.business_name || "");
+    const email = String(body.email || "");
+    const phone = String(body.phone || "");
+    const service = String(body.service || "");
+    const budget = String(body.budget || "");
+    const details = String(body.details || "");
+
+    const detailsForEmail = details.split("
+").join("<br>");
+
+    const { error } = await resend.emails.send({
+      from: "Excel Pro GH <onboarding@resend.dev>",
       to: ["excelprogh@gmail.com"],
-      subject: `New request: ${service} – ${business_name}`,
+      subject: `New request: ${service} - ${businessName}`,
       html: `
         <h2>New Client Request</h2>
-        <p><strong>Business:</strong> ${business_name}</p>
+        <p><strong>Business:</strong> ${businessName}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone}</p>
         <p><strong>Service:</strong> ${service}</p>
         ${budget ? `<p><strong>Budget:</strong> ${budget}</p>` : ""}
-        <p><strong>Details:</strong></p>
-        <p>${details.replace(/
-/g, "<br>")}</p>
+        <p><strong>Project details:</strong></p>
+        <p>${detailsForEmail}</p>
         <hr />
-        <p style="font-size:12px;color:#666;">
-          Submitted via Excel Pro GH website.
+        <p style="font-size: 12px; color: #666;">
+          Submitted through the Excel Pro GH Client Portal.
         </p>
       `,
     });
 
+    if (error) {
+      console.error("Resend error:", error);
+      return NextResponse.json(
+        { ok: false, error: "Email notification failed" },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Notify error:", error);
-    return NextResponse.json({ ok: false, error: "Failed to send notification" }, { status: 500 });
+    console.error("Notification route error:", error);
+    return NextResponse.json(
+      { ok: false, error: "Unable to send email notification" },
+      { status: 500 }
+    );
   }
 }
