@@ -14,31 +14,24 @@ export async function POST(request: NextRequest) {
     const budget = String(body.budget || "");
     const details = String(body.details || "");
 
-    const detailsForEmail = details.split("
-").join("<br>");
-
     const { error } = await resend.emails.send({
       from: "Excel Pro GH <onboarding@resend.dev>",
       to: ["excelprogh@gmail.com"],
-      subject: `New request: ${service} - ${businessName}`,
-      html: `
-        <h2>New Client Request</h2>
-        <p><strong>Business:</strong> ${businessName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Service:</strong> ${service}</p>
-        ${budget ? `<p><strong>Budget:</strong> ${budget}</p>` : ""}
-        <p><strong>Project details:</strong></p>
-        <p>${detailsForEmail}</p>
-        <hr />
-        <p style="font-size: 12px; color: #666;">
-          Submitted through the Excel Pro GH Client Portal.
-        </p>
-      `,
+      subject: "New request from " + businessName,
+      html:
+        "<h2>New Client Request</h2>" +
+        "<p><strong>Business:</strong> " + businessName + "</p>" +
+        "<p><strong>Email:</strong> " + email + "</p>" +
+        "<p><strong>Phone:</strong> " + phone + "</p>" +
+        "<p><strong>Service:</strong> " + service + "</p>" +
+        "<p><strong>Budget:</strong> " + budget + "</p>" +
+        "<p><strong>Project details:</strong></p>" +
+        "<p>" + details + "</p>" +
+        "<hr />" +
+        "<p>Submitted through the Excel Pro GH Client Portal.</p>",
     });
 
     if (error) {
-      console.error("Resend error:", error);
       return NextResponse.json(
         { ok: false, error: "Email notification failed" },
         { status: 500 }
@@ -47,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Notification route error:", error);
+    console.error(error);
     return NextResponse.json(
       { ok: false, error: "Unable to send email notification" },
       { status: 500 }
