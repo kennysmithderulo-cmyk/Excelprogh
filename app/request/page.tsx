@@ -1,262 +1,238 @@
 "use client";
 
-import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { Mail, Phone, MessageCircle, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { FormEvent, useState } from "react";
+import { PageWrapper } from "@/components/PageWrapper";
 
-const supabase = createClient();
+const serviceOptions = [
+  "Business website",
+  "E-commerce website",
+  "Excel automation",
+  "Data cleaning",
+  "Dashboard",
+  "Virtual assistant or support",
+  "Something else",
+];
 
 export default function RequestPage() {
-  const [formData, setFormData] = useState({
-    businessName: "",
+  const [form, setForm] = useState({
+    name: "",
     email: "",
     phone: "",
+    business: "",
     service: "",
     budget: "",
-    details: "",
+    message: "",
   });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const updateField = (field: keyof typeof form, value: string) => {
+    setForm((current) => ({
+      ...current,
+      [field]: value,
+    }));
   };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("submitting");
+  const send = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    // Save to Supabase
-    const { error: dbError } = await supabase.from("client_requests").insert([
-      {
-        business_name: formData.businessName,
-        email: formData.email,
-        phone: formData.phone,
-        service: formData.service,
-        budget: formData.budget,
-        details: formData.details,
-        status: "New",
-      },
-    ]);
-
-    if (dbError) {
-      setStatus("error");
+    if (!form.name.trim() || !form.email.trim()) {
+      setStatus("Please enter your name and email address.");
       return;
     }
 
-    // Send email notification (non-blocking)
-    try {
-      await fetch("/api/notify-new-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          business_name: formData.businessName,
-          email: formData.email,
-          phone: formData.phone,
-          service: formData.service,
-          budget: formData.budget,
-          details: formData.details,
-        }),
-      });
-    } catch (err) {
-      console.error("Email notification failed:", err);
-      // Don't fail the whole request if email fails
-    }
+    setStatus("");
+    setIsSubmitting(true);
 
-    setStatus("success");
-    setFormData({
-      businessName: "",
-      email: "",
-      phone: "",
-      service: "",
-      budget: "",
-      details: "",
-    });
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setStatus(
+          result.error ||
+            "We could not save your request. Please contact us on WhatsApp."
+        );
+        return;
+      }
+
+      const whatsappMessage = encodeURIComponent(
+        `Hello Excel Pro GH. My name is ${form.name}. I need help with: ${
+          form.service || "a business project"
+        }. ${form.message || ""}`
+      );
+
+      setStatus(
+        "Your request has been saved. WhatsApp will now open so you can send a quick follow-up."
+      );
+
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        business: "",
+        service: "",
+        budget: "",
+        message: "",
+      });
+
+      window.open(
+        `https://wa.me/233548097756?text=${whatsappMessage}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } catch (error) {
+      console.error("Lead submission failed:", error);
+      setStatus(
+        "We could not connect to the contact form. Please contact us directly on WhatsApp."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <header className="bg-white border-b border-blue-100">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link href="/" className="inline-flex items-center text-blue-600 hover:underline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
-        </div>
-      </header>
+    <PageWrapper>
+      <section className="mx-auto max-w-4xl px-6 py-10 sm:py-14">
+        <p className="text-sm font-semibold uppercase tracking-wider text-[#f4c542]">
+          Client portal
+        </p>
+        <h1 className="mt-2 text-3xl font-bold sm:text-4xl">
+          Request a quote for your project.
+        </h1>
+        <p className="mt-4 text-lg leading-8 text-white/70">
+          Tell us about your business and what you want to build or improve. We
+          will review your request and contact you with options and pricing.
+        </p>
+      </section>
 
-      {/* Form */}
-      <main className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Request a Service</h1>
-          <p className="text-gray-600 mb-8">
-            Tell us about your project. We’ll review and send you a quote.
-          </p>
-
-          {status === "success" && (
-            <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg p-4 mb-6">
-              Thank you! Your request has been sent. We’ll contact you soon.
-            </div>
-          )}
-
-          {status === "error" && (
-            <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mb-6">
-              Something went wrong. Please try again or contact us directly.
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 border border-blue-100 space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Business name
-              </label>
-              <input
-                type="text"
-                name="businessName"
-                value={formData.businessName}
-                onChange={handleChange}
-                required
-                className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="Your business or organization"
-              />
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
+      <section className="mx-auto max-w-4xl px-6 pb-16">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8">
+          <form onSubmit={send} className="grid gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="grid gap-2 text-sm">
+                Your name
                 <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
                   required
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  value={form.name}
+                  onChange={(e) => updateField("name", e.target.value)}
+                  className="rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
+                  placeholder="e.g. Kojo Mensah"
+                />
+              </label>
+
+              <label className="grid gap-2 text-sm">
+                Email address
+                <input
+                  required
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => updateField("email", e.target.value)}
+                  className="rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
                   placeholder="you@example.com"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone / WhatsApp
-                </label>
+              </label>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="grid gap-2 text-sm">
+                Phone (optional)
                 <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="+233 XX XXX XXXX"
+                  value={form.phone}
+                  onChange={(e) => updateField("phone", e.target.value)}
+                  className="rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
+                  placeholder="+233..."
                 />
-              </div>
+              </label>
+
+              <label className="grid gap-2 text-sm">
+                Business name (optional)
+                <input
+                  value={form.business}
+                  onChange={(e) => updateField("business", e.target.value)}
+                  className="rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
+                  placeholder="Your business name"
+                />
+              </label>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Service
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="grid gap-2 text-sm">
+                What do you need?
+                <select
+                  value={form.service}
+                  onChange={(e) => updateField("service", e.target.value)}
+                  className="rounded-lg border border-white/10 bg-[#111d38] p-3 outline-none focus:border-[#f4c542]"
+                >
+                  <option value="">Select a service</option>
+                  {serviceOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
               </label>
-              <select
-                name="service"
-                value={formData.service}
-                onChange={handleChange}
-                required
-                className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-              >
-                <option value="">Select a service</option>
-                <option>E-commerce & Product Websites</option>
-                <option>Inventory, Sales & Invoicing</option>
-                <option>Client Records & Appointments</option>
-                <option>Reports & Business Dashboards</option>
-                <option>Data Cleaning & Preparation</option>
-                <option>Virtual Assistant & Customer Support</option>
-              </select>
+
+              <label className="grid gap-2 text-sm">
+                Estimated budget (optional)
+                <select
+                  value={form.budget}
+                  onChange={(e) => updateField("budget", e.target.value)}
+                  className="rounded-lg border border-white/10 bg-[#111d38] p-3 outline-none focus:border-[#f4c542]"
+                >
+                  <option value="">Not sure yet</option>
+                  <option>Under GHS 500</option>
+                  <option>GHS 500 – 1,500</option>
+                  <option>GHS 1,500 – 3,000</option>
+                  <option>Above GHS 3,000</option>
+                </select>
+              </label>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Budget (optional)
-              </label>
-              <input
-                type="text"
-                name="budget"
-                value={formData.budget}
-                onChange={handleChange}
-                className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="e.g. GHS 800–1,200"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Project details
-              </label>
+            <label className="grid gap-2 text-sm">
+              Briefly describe your project
               <textarea
-                name="details"
-                value={formData.details}
-                onChange={handleChange}
-                required
-                rows={5}
-                className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="Describe what you need, any deadlines, and special requirements."
+                value={form.message}
+                onChange={(e) => updateField("message", e.target.value)}
+                className="min-h-28 rounded-lg border border-white/10 bg-white/10 p-3 outline-none focus:border-[#f4c542]"
+                placeholder="Tell us what you want to build or improve."
               />
-            </div>
+            </label>
 
             <button
               type="submit"
-              disabled={status === "submitting"}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50"
+              disabled={isSubmitting}
+              className="rounded-lg bg-[#f4c542] py-3 font-bold text-[#070f26] hover:bg-[#ffd95c] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {status === "submitting" ? "Sending..." : "Send Request"}
+              {isSubmitting ? "Sending request..." : "Send Request"}
             </button>
-          </form>
 
-          {/* Direct contact */}
-          <div className="mt-8 bg-white rounded-2xl p-6 border border-blue-100">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Or contact us directly
-            </h2>
-            <div className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <Mail className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <p className="font-medium text-gray-900">Email</p>
-                  <a href="mailto:excelprogh@gmail.com" className="text-blue-600 hover:underline">
-                    excelprogh@gmail.com
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <Phone className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <p className="font-medium text-gray-900">Phone</p>
-                  <a href="tel:+233556699262" className="text-blue-600 hover:underline">
-                    +233 55 669 9262
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MessageCircle className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div>
-                  <p className="font-medium text-gray-900">WhatsApp</p>
-                  <a
-                    href="https://wa.me/233556699262"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
-                  >
-                    Chat on WhatsApp
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+            {status && (
+              <p className="text-sm leading-6 text-green-300">{status}</p>
+            )}
+          </form>
         </div>
-      </main>
-    </div>
+
+        <p className="mt-6 text-center text-sm text-white/60">
+          Prefer to chat first?{" "}
+          <a
+            href="https://wa.me/233548097756"
+            target="_blank"
+            rel="noreferrer"
+            className="text-green-400 hover:underline"
+          >
+            Open WhatsApp
+          </a>
+        </p>
+      </section>
+    </PageWrapper>
   );
-      }
+}
