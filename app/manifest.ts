@@ -7,6 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description:
       "Request websites, automation, dashboards, and business support from Excel Pro GH.",
     start_url: "/",
+    scope: "/",
     display: "standalone",
     background_color: "#070f26",
     theme_color: "#070f26",
@@ -14,13 +15,13 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["business", "productivity"],
     icons: [
       {
-        src: "/profile.jpg?v=2",
+        src: "/profile.jpg",
         sizes: "192x192",
         type: "image/jpeg",
         purpose: "any",
       },
       {
-        src: "/profile.jpg?v=2",
+        src: "/profile.jpg",
         sizes: "512x512",
         type: "image/jpeg",
         purpose: "any",
