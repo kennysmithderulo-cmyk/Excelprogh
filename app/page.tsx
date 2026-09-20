@@ -234,11 +234,11 @@ export default function Home() {
 
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <a
-            href="#contact"
-            className="rounded-lg bg-[#f4c542] px-6 py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]"
-          >
-            Request a Quote
-          </a>
+  href="/request"
+  className="rounded-lg bg-[#f4c542] px-6 py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]"
+>
+  Request a Quote
+</a>
           <a
             href="https://wa.me/233548097756"
             target="_blank"
