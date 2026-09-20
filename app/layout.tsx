@@ -17,11 +17,12 @@ export const metadata: Metadata = {
     title: "Excel Pro GH | Websites & Excel Systems",
     description:
       "Save time and grow your business with automated websites and Excel systems.",
-    url: "https://excelprogh.vercel.app", // update when you have a custom domain
+    url: "https://excelprogh.vercel.app",
     siteName: "Excel Pro GH",
     locale: "en_GH",
     type: "website",
   },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="manifest" href="/manifest.json" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RWN8J9ZMG4"
           strategy="afterInteractive"
