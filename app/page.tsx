@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const services = [
   {
@@ -110,6 +110,20 @@ export default function Home() {
   const [status, setStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Register service worker for PWA install
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("SW registered:", registration);
+        })
+        .catch((err) => {
+          console.error("SW registration failed:", err);
+        });
+    }
+  }, []);
+
   const updateField = (field: keyof typeof book, value: string) => {
     setBook((current) => ({
       ...current,
@@ -214,10 +228,10 @@ export default function Home() {
 
       <section className="mx-auto max-w-6xl px-6 py-20 text-center">
         <img
-  src="/profile.jpg?v=2"
-  alt="Excel Pro GH logo"
-  className="mx-auto h-28 w-28 rounded-full border-4 border-white/20 bg-white object-contain p-2"
-/>
+          src="/profile.jpg?v=2"
+          alt="Excel Pro GH logo"
+          className="mx-auto h-28 w-28 rounded-full border-4 border-white/20 bg-white object-contain p-2"
+        />
 
         <p className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-[#f4c542]">
           Websites, automation and business support
@@ -234,11 +248,11 @@ export default function Home() {
 
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
           <a
-  href="/request"
-  className="rounded-lg bg-[#f4c542] px-6 py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]"
->
-  Request a Quote
-</a>
+            href="/request"
+            className="rounded-lg bg-[#f4c542] px-6 py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]"
+          >
+            Request a Quote
+          </a>
           <a
             href="https://wa.me/233548097756"
             target="_blank"
@@ -408,36 +422,36 @@ export default function Home() {
               solution. You can also contact us directly on WhatsApp.
             </p>
 
-    <div className="mt-8 space-y-4 text-white/80">
-  <p>
-    <span className="text-white/50">Phone:</span>{" "}
-    <a
-      href="tel:+233548097756"
-      className="text-green-400 hover:underline"
-    >
-      +233 548097756
-    </a>
-  </p>
+            <div className="mt-8 space-y-4 text-white/80">
+              <p>
+                <span className="text-white/50">Phone:</span>{" "}
+                <a
+                  href="tel:+233548097756"
+                  className="text-green-400 hover:underline"
+                >
+                  +233 548097756
+                </a>
+              </p>
 
-  <p>
-    <span className="text-white/50">Email:</span>{" "}
-    <a
-      href="mailto:contact.excelprogh@gmail.com"
-      className="text-green-400 hover:underline"
-    >
-      contact.excelprogh@gmail.com
-    </a>
-  </p>
+              <p>
+                <span className="text-white/50">Email:</span>{" "}
+                <a
+                  href="mailto:contact.excelprogh@gmail.com"
+                  className="text-green-400 hover:underline"
+                >
+                  contact.excelprogh@gmail.com
+                </a>
+              </p>
 
-  <p>
-    <span className="text-white/50">Location:</span> Accra, Ghana
-  </p>
+              <p>
+                <span className="text-white/50">Location:</span> Accra, Ghana
+              </p>
 
-  <p>
-    <span className="text-white/50">Response time:</span> Usually within 24
-    hours
-  </p>
-</div>
+              <p>
+                <span className="text-white/50">Response time:</span> Usually
+                within 24 hours
+              </p>
+            </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8">
@@ -568,16 +582,3 @@ function SiteFooter() {
               className="text-green-400 hover:text-green-300"
             >
               WhatsApp us
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto mt-10 max-w-6xl border-t border-white/10 pt-6 text-sm text-white/40">
-        © {new Date().getFullYear()} Excel Pro GH. All rights reserved. Accra,
-        Ghana.
-      </div>
-    </footer>
-  );
-      }
-        
