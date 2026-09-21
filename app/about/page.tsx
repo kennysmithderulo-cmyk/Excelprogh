@@ -18,7 +18,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pb-16">
+      <section className="mx-auto max-w-4xl px-6 pb-24">
         <div className="space-y-8">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-bold">What we believe</h2>
