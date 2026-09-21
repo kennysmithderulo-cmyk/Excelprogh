@@ -115,7 +115,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-6xl px-6 py-14 sm:py-16">
+      <section className="mx-auto max-w-6xl px-6 pb-24 pt-14 sm:pb-16 sm:pt-16">
         <div className="rounded-2xl border border-[#f4c542]/30 bg-[#f4c542]/10 p-6 sm:p-10">
           <p className="text-sm font-semibold uppercase tracking-wider text-[#f4c542]">
             Start a project
