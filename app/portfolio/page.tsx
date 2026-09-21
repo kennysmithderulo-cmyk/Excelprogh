@@ -50,7 +50,7 @@ export default function PortfolioPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {portfolio.map((project) => (
             <a
