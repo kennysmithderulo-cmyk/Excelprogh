@@ -73,7 +73,7 @@ export default function ServicesPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="space-y-12">
           {services.map((group) => (
             <div key={group.category}>
