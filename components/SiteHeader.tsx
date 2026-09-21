@@ -17,13 +17,21 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070f26]/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070f26]/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <Link href="/" className="text-lg font-bold">
-          Excel Pro GH
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-lg font-bold"
+        >
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f4c542] text-sm font-bold text-[#070f26]">
+            EP
+          </div>
+          <span className="hidden sm:inline">Excel Pro GH</span>
         </Link>
 
-        <nav className="hidden items-center gap-4 text-sm md:flex">
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-5 text-sm md:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -39,13 +47,13 @@ export function SiteHeader() {
           ))}
           <Link
             href="/request"
-            className="rounded-lg bg-[#f4c542] px-3 py-1.5 font-semibold text-[#070f26] transition hover:bg-[#ffd95c]"
+            className="rounded-md bg-[#f4c542] px-3 py-1.5 text-sm font-semibold text-[#070f26] transition hover:bg-[#ffd95c]"
           >
             Request
           </Link>
         </nav>
 
-        {/* Mobile menu button – simple version: link to request */}
+        {/* Mobile: small CTA only */}
         <Link
           href="/request"
           className="rounded-md bg-[#f4c542] px-3 py-1.5 text-sm font-semibold text-[#070f26] md:hidden"
