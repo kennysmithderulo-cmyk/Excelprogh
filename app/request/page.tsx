@@ -114,7 +114,7 @@ export default function RequestPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pb-16">
+      <section className="mx-auto max-w-4xl px-6 pb-24">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8">
           <form onSubmit={send} className="grid gap-4">
             <div className="grid gap-4 sm:grid-cols-2">
