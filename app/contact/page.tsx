@@ -17,7 +17,7 @@ export default function ContactPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pb-16">
+      <section className="mx-auto max-w-4xl px-6 pb-24">
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-lg font-bold">Phone & WhatsApp</h2>
