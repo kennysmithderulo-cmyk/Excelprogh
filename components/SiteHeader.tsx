@@ -1,66 +1,37 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { MobileMenu } from "./MobileMenu";
 
 export function SiteHeader() {
-  const pathname = usePathname();
-
-  const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/services", label: "Services" },
-    { href: "/portfolio", label: "Portfolio" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
-  ];
-
-  const isActive = (href: string) => pathname === href;
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070f26]/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-lg font-bold"
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f4c542] text-sm font-bold text-[#070f26]">
-            EP
-          </div>
-          <span className="hidden sm:inline">Excel Pro GH</span>
-        </Link>
+    <>
+      <header className="sticky top-0 z-40 w-full bg-[#070f26]/80 backdrop-blur border-b border-white/10">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="flex h-14 items-center justify-between">
+            {/* Left: optional logo */}
+            <div className="text-white font-semibold">
+              Excelprogh
+            </div>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-5 text-sm md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`transition ${
-                isActive(item.href)
-                  ? "text-[#f4c542]"
-                  : "text-white/70 hover:text-white"
-              }`}
+            {/* Right: menu button */}
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="text-white p-2"
+              aria-label="Open menu"
             >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            href="/request"
-            className="rounded-md bg-[#f4c542] px-3 py-1.5 text-sm font-semibold text-[#070f26] transition hover:bg-[#ffd95c]"
-          >
-            Request
-          </Link>
-        </nav>
+              ☰
+            </button>
+          </div>
+        </div>
+      </header>
 
-        {/* Mobile: small CTA only */}
-        <Link
-          href="/request"
-          className="rounded-md bg-[#f4c542] px-3 py-1.5 text-sm font-semibold text-[#070f26] md:hidden"
-        >
-          Request
-        </Link>
-      </div>
-    </header>
+      {/* Full-screen or slide-in menu */}
+      {menuOpen && (
+        <MobileMenu onClose={() => setMenuOpen(false)} />
+      )}
+    </>
   );
 }
