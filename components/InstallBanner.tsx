@@ -34,11 +34,11 @@ export function InstallBanner() {
   if (!show || !isMobile) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#070f26]/10 bg-white px-4 py-3 sm:hidden">
-      <p className="text-sm text-[#070f26]">
+    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-[#0b1430] px-4 py-3 sm:hidden">
+      <p className="text-sm text-white/80">
         Install Excel Pro GH for quick access
       </p>
-      <p className="mt-1 text-xs text-[#070f26]/70">
+      <p className="mt-1 text-xs text-white/60">
         Tap the menu in your browser → Install app / Add to Home screen
       </p>
       <div className="mt-2 flex items-center gap-2">
@@ -52,7 +52,7 @@ export function InstallBanner() {
           href="https://wa.me/233548097756"
           target="_blank"
           rel="noreferrer"
-          className="text-xs font-semibold text-[#070f26] hover:text-[#f4c542]"
+          className="text-xs text-green-400 hover:underline"
         >
           Need help?
         </a>
