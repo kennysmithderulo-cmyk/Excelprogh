@@ -8,10 +8,10 @@ export default function AboutPage() {
         <p className="text-sm font-semibold uppercase tracking-wider text-[#f4c542]">
           About Excel Pro GH
         </p>
-        <h1 className="mt-2 text-3xl font-bold sm:text-4xl">
+        <h1 className="mt-2 text-3xl font-bold sm:text-4xl text-[#070f26]">
           Practical technology for Ghanaian businesses.
         </h1>
-        <p className="mt-4 text-lg leading-8 text-white/70">
+        <p className="mt-4 text-lg leading-8 text-[#070f26]/80">
           Excel Pro GH helps small and growing businesses in Ghana save time and
           reduce errors with simple digital systems. We focus on solutions that
           are easy to use, affordable, and aligned with how you actually work.
@@ -20,9 +20,9 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-4xl px-6 pb-24">
         <div className="space-y-8">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-xl font-bold">What we believe</h2>
-            <ul className="mt-3 space-y-2 text-white/70">
+          <div className="rounded-2xl border border-[#070f26]/10 bg-white p-6">
+            <h2 className="text-xl font-bold text-[#070f26]">What we believe</h2>
+            <ul className="mt-3 space-y-2 text-[#070f26]/80">
               <li>• Technology should be simple, not complicated.</li>
               <li>• Your systems must work offline and on basic devices.</li>
               <li>• Clear pricing and realistic project scopes matter.</li>
@@ -30,9 +30,9 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-xl font-bold">How we work</h2>
-            <ol className="mt-3 list-decimal space-y-2 pl-5 text-white/70">
+          <div className="rounded-2xl border border-[#070f26]/10 bg-white p-6">
+            <h2 className="text-xl font-bold text-[#070f26]">How we work</h2>
+            <ol className="mt-3 list-decimal space-y-2 pl-5 text-[#070f26]/80">
               <li>We listen to how your business operates today.</li>
               <li>
                 We suggest the simplest system that solves your main problems.
@@ -49,8 +49,10 @@ export default function AboutPage() {
           </div>
 
           <div className="rounded-2xl border border-[#f4c542]/30 bg-[#f4c542]/10 p-6">
-            <h2 className="text-xl font-bold">Ready to work together?</h2>
-            <p className="mt-2 text-white/70">
+            <h2 className="text-xl font-bold text-[#070f26]">
+              Ready to work together?
+            </h2>
+            <p className="mt-2 text-[#070f26]/80">
               Tell us about your business and what you want to improve. We will
               reply with options and clear pricing.
             </p>
