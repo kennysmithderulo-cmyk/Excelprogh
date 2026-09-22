@@ -26,7 +26,7 @@ export default function HomePage() {
         <img
           src="/profile.jpg?v=2"
           alt="Excel Pro GH logo"
-          className="mx-auto h-24 w-24 rounded-full border-4 border-white/20 bg-white object-contain p-2 sm:h-28 sm:w-28"
+          className="mx-auto h-24 w-24 rounded-full border-4 border-[#f4c542]/40 bg-white object-contain p-2 sm:h-28 sm:w-28"
         />
 
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-[#f4c542] sm:text-sm">
@@ -37,7 +37,7 @@ export default function HomePage() {
           Simple digital systems that help your business save time and grow.
         </h1>
 
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#070f26]/70 sm:text-lg">
           We build professional websites, Excel automation systems, dashboards,
           and operational support for small and growing businesses in Ghana.
         </p>
@@ -53,7 +53,7 @@ export default function HomePage() {
             href="https://wa.me/233548097756"
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg border border-white/25 px-6 py-3 font-semibold hover:bg-white/10"
+            className="rounded-lg border border-[#070f26]/25 px-6 py-3 font-semibold hover:bg-[#070f26]/5"
           >
             Chat on WhatsApp
           </a>
@@ -63,17 +63,17 @@ export default function HomePage() {
           {highlights.map((h) => (
             <div
               key={h.title}
-              className="rounded-xl border border-white/10 bg-white/5 p-4"
+              className="rounded-xl border border-[#070f26]/10 bg-[#f9f9f9] p-4"
             >
               <p className="text-xl font-bold text-[#f4c542]">{h.title}</p>
-              <p className="mt-1 text-sm text-white/60">{h.desc}</p>
+              <p className="mt-1 text-sm text-[#070f26]/70">{h.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Services preview */}
-      <section className="bg-white/5 px-6 py-14 sm:py-16">
+      <section className="bg-[#f9f9f9] px-6 py-14 sm:py-16">
         <div className="mx-auto max-w-6xl">
           <p className="text-sm font-semibold uppercase tracking-wider text-[#f4c542]">
             What we do
@@ -93,10 +93,10 @@ export default function HomePage() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-xl border border-white/10 bg-[#0b1430] p-5"
+                className="rounded-xl border border-[#070f26]/10 bg-white p-5"
               >
-                <h3 className="font-semibold">{item}</h3>
-                <p className="mt-2 text-sm text-white/60">
+                <h3 className="font-semibold text-[#070f26]">{item}</h3>
+                <p className="mt-2 text-sm text-[#070f26]/70">
                   Request a quote tailored to your business needs.
                 </p>
               </div>
@@ -106,7 +106,7 @@ export default function HomePage() {
           <div className="mt-8">
             <Link
               href="/services"
-              className="inline-flex rounded-lg border border-white/25 px-5 py-3 font-semibold hover:bg-white/10"
+              className="inline-flex rounded-lg border border-[#070f26]/25 px-5 py-3 font-semibold text-[#070f26] hover:bg-[#070f26]/5"
             >
               View all services
             </Link>
@@ -123,7 +123,7 @@ export default function HomePage() {
           <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
             Tell us what your business needs.
           </h2>
-          <p className="mt-3 max-w-2xl text-white/70">
+          <p className="mt-3 max-w-2xl text-[#070f26]/70">
             Share a few details and we will help you choose the right solution.
             You can also contact us directly on WhatsApp.
           </p>
@@ -139,7 +139,7 @@ export default function HomePage() {
               href="https://wa.me/233548097756"
               target="_blank"
               rel="noreferrer"
-              className="rounded-lg border border-white/25 px-6 py-3 font-semibold hover:bg-white/10"
+              className="rounded-lg border border-[#070f26]/25 px-6 py-3 font-semibold text-[#070f26] hover:bg-[#070f26]/5"
             >
               Chat on WhatsApp
             </a>
