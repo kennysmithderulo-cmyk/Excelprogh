@@ -32,7 +32,6 @@ const services = [
         desc: "Simple systems for recording clients, managing appointments, and tracking payments.",
         tag: "From GHS 250",
         highlight: "Reduce lost records and missed follow-ups.",
-        // No specific image from your list; using a generic one
         image: "/customer-support.jpg",
       },
       {
@@ -40,7 +39,6 @@ const services = [
         desc: "Clear dashboards for sales, expenses, profit, and key performance indicators.",
         tag: "From GHS 250",
         highlight: "Understand your business without opening multiple files.",
-        // Using data-analytics as a fit
         image: "/data-analytics.jpg",
       },
     ],
@@ -76,7 +74,7 @@ export default function ServicesPage() {
         <h1 className="mt-2 text-3xl font-bold sm:text-4xl">
           Tools and support built around your business.
         </h1>
-        <p className="mt-3 max-w-3xl text-white/60">
+        <p className="mt-3 max-w-3xl text-[#070f26]/70">
           Choose a ready-made solution or contact us for a custom system based
           on the way your business operates.
         </p>
@@ -94,10 +92,10 @@ export default function ServicesPage() {
                 {group.items.map((service) => (
                   <div
                     key={service.title}
-                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+                    className="overflow-hidden rounded-2xl border border-[#070f26]/10 bg-white"
                   >
                     {/* Service image */}
-                    <div className="relative h-40 w-full">
+                    <div className="relative h-40 w-full bg-[#f4f4f4]">
                       <Image
                         src={service.image}
                         alt={service.title}
@@ -114,10 +112,10 @@ export default function ServicesPage() {
                       <h3 className="mt-3 text-xl font-bold">
                         {service.title}
                       </h3>
-                      <p className="mt-2 leading-7 text-white/60">
+                      <p className="mt-2 leading-7 text-[#070f26]/70">
                         {service.desc}
                       </p>
-                      <p className="mt-3 text-sm text-green-400">
+                      <p className="mt-3 text-sm text-green-600">
                         {service.highlight}
                       </p>
                     </div>
