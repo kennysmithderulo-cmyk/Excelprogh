@@ -47,7 +47,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body>{children}</body>
+      <body className="bg-white text-[#070f26]">{children}</body>
     </html>
   );
 }
