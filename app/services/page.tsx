@@ -71,10 +71,10 @@ export default function ServicesPage() {
         <p className="text-sm font-semibold uppercase tracking-wider text-[#f4c542]">
           Our services
         </p>
-        <h1 className="mt-2 text-3xl font-bold sm:text-4xl">
+        <h1 className="mt-2 text-3xl font-bold sm:text-4xl text-[#070f26]">
           Tools and support built around your business.
         </h1>
-        <p className="mt-3 max-w-3xl text-[#070f26]/70">
+        <p className="mt-3 max-w-3xl text-[#070f26]/80">
           Choose a ready-made solution or contact us for a custom system based
           on the way your business operates.
         </p>
@@ -84,7 +84,7 @@ export default function ServicesPage() {
         <div className="space-y-12">
           {services.map((group) => (
             <div key={group.category}>
-              <h2 className="mb-4 text-2xl font-semibold">
+              <h2 className="mb-4 text-2xl font-semibold text-[#070f26]">
                 {group.category}
               </h2>
 
@@ -109,13 +109,13 @@ export default function ServicesPage() {
                       <span className="rounded-full bg-[#f4c542] px-3 py-1 text-xs font-bold text-[#070f26]">
                         {service.tag}
                       </span>
-                      <h3 className="mt-3 text-xl font-bold">
+                      <h3 className="mt-3 text-xl font-bold text-[#070f26]">
                         {service.title}
                       </h3>
-                      <p className="mt-2 leading-7 text-[#070f26]/70">
+                      <p className="mt-2 leading-7 text-[#070f26]/80">
                         {service.desc}
                       </p>
-                      <p className="mt-3 text-sm text-green-600">
+                      <p className="mt-3 text-sm text-green-700">
                         {service.highlight}
                       </p>
                     </div>
