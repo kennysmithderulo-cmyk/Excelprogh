@@ -1,6 +1,7 @@
 "use client";
 
 import { PageWrapper } from "@/components/PageWrapper";
+import Image from "next/image";
 import Link from "next/link";
 
 const services = [
@@ -12,12 +13,14 @@ const services = [
         desc: "Mobile-friendly online stores and product websites with WhatsApp orders and simple management.",
         tag: "From GHS 500",
         highlight: "Ideal for fashion, hair, cosmetics, and retail businesses.",
+        image: "/website-dev.jpg",
       },
       {
         title: "Inventory, Sales & Invoicing",
         desc: "Track stock, sales, expenses, invoices, and receipts using a practical Excel or Google Sheets system.",
         tag: "From GHS 200",
         highlight: "Suitable for shops, pharmacies, and small warehouses.",
+        image: "/inventory-invoice.jpg",
       },
     ],
   },
@@ -29,12 +32,16 @@ const services = [
         desc: "Simple systems for recording clients, managing appointments, and tracking payments.",
         tag: "From GHS 250",
         highlight: "Reduce lost records and missed follow-ups.",
+        // No specific image from your list; using a generic one
+        image: "/customer-support.jpg",
       },
       {
         title: "Reports & Business Dashboards",
         desc: "Clear dashboards for sales, expenses, profit, and key performance indicators.",
         tag: "From GHS 250",
         highlight: "Understand your business without opening multiple files.",
+        // Using data-analytics as a fit
+        image: "/data-analytics.jpg",
       },
     ],
   },
@@ -46,12 +53,14 @@ const services = [
         desc: "Convert messy sales, bank, mobile-money, and customer data into clean, usable records.",
         tag: "From GHS 100",
         highlight: "Save time and reduce errors in your reports.",
+        image: "/data-cleaning.jpg",
       },
       {
         title: "Virtual Assistant & Customer Support",
         desc: "Get help with administration, research, email, chat support, and daily business operations.",
         tag: "From GHS 350/month",
         highlight: "Flexible support for growing businesses.",
+        image: "/virtual-assistant.jpg",
       },
     ],
   },
@@ -85,20 +94,33 @@ export default function ServicesPage() {
                 {group.items.map((service) => (
                   <div
                     key={service.title}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-5"
+                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
                   >
-                    <span className="rounded-full bg-[#f4c542] px-3 py-1 text-xs font-bold text-[#070f26]">
-                      {service.tag}
-                    </span>
-                    <h3 className="mt-3 text-xl font-bold">
-                      {service.title}
-                    </h3>
-                    <p className="mt-2 leading-7 text-white/60">
-                      {service.desc}
-                    </p>
-                    <p className="mt-3 text-sm text-green-400">
-                      {service.highlight}
-                    </p>
+                    {/* Service image */}
+                    <div className="relative h-40 w-full">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    {/* Service content */}
+                    <div className="p-5">
+                      <span className="rounded-full bg-[#f4c542] px-3 py-1 text-xs font-bold text-[#070f26]">
+                        {service.tag}
+                      </span>
+                      <h3 className="mt-3 text-xl font-bold">
+                        {service.title}
+                      </h3>
+                      <p className="mt-2 leading-7 text-white/60">
+                        {service.desc}
+                      </p>
+                      <p className="mt-3 text-sm text-green-400">
+                        {service.highlight}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
