@@ -41,10 +41,10 @@ export default function PortfolioPage() {
         <p className="text-sm font-semibold uppercase tracking-wider text-[#f4c542]">
           Selected work
         </p>
-        <h1 className="mt-2 text-3xl font-bold sm:text-4xl text-[#070f26]">
+        <h1 className="mt-2 text-3xl font-bold sm:text-4xl">
           Examples of what we build.
         </h1>
-        <p className="mt-3 max-w-3xl text-[#070f26]/80">
+        <p className="mt-3 max-w-3xl text-white/60">
           A few projects that show how we combine simple design with practical
           functionality.
         </p>
@@ -60,7 +60,7 @@ export default function PortfolioPage() {
               rel={
                 project.link.startsWith("http") ? "noreferrer" : undefined
               }
-              className="group overflow-hidden rounded-2xl border border-[#070f26]/10 bg-white transition hover:-translate-y-1 hover:border-[#f4c542]/50"
+              className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-[#f4c542]/50"
             >
               <img
                 src={project.image}
@@ -71,10 +71,8 @@ export default function PortfolioPage() {
                 <p className="text-xs font-semibold uppercase text-[#f4c542]">
                   {project.tag}
                 </p>
-                <h3 className="mt-2 font-bold text-[#070f26]">
-                  {project.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-[#070f26]/80">
+                <h3 className="mt-2 font-bold">{project.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-white/60">
                   {project.desc}
                 </p>
               </div>
