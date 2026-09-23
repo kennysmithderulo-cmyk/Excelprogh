@@ -33,11 +33,14 @@ export const metadata: Metadata = {
     locale: "en_GH",
 
     type: "website",
+export const metadata: Metadata = {
+  title: "Excel Pro GH | Kenny Murray - 7 Systems - Ghana",
+  description:
+    "We build business systems: automated, offline, no subscription — from data cleaning that saves 96% time (4hrs → 12min) to e-commerce websites & 24/7 customer support teams. 📧 Email:contact.excelprogh@gmail.com 📞 Phone/WhatsApp: +233 548097756",
+  manifest: "/manifest.json",
+  verification: {
+    google: "I6wBAERuML0GEQrEUsR6XUw-z8BPUTvVP_w6NBfjciY",
   },
-
-  manifest: "/manifest.json",verification: {
-  google: "I6wBAERuML0GEQrEUsR6XUw-z8BPUTvVP_w6NBfjciY",
-},
 };
 
 export default function RootLayout({
