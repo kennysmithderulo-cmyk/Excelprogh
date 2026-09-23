@@ -3,11 +3,9 @@ import Script from "next/script";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Excel Pro GH | Websites, Excel Automation & Data Solutions in Ghana",
-
+  title: "Excel Pro GH | Kenny Murray - 7 Systems - Ghana",
   description:
-    "We build automated, offline-friendly business systems for SMEs and entrepreneurs — from e-commerce sites to Excel automation, data cleaning, and support teams.",
-
+    "We build business systems: automated, offline, no subscription — from data cleaning that saves 96% time (4hrs → 12min) to e-commerce websites & 24/7 customer support teams. 📧 Email:contact.excelprogh@gmail.com 📞 Phone/WhatsApp: +233 548097756",
   keywords: [
     "Excel automation Ghana",
     "website development Ghana",
@@ -15,31 +13,18 @@ export const metadata: Metadata = {
     "business systems",
     "Accra",
   ],
-
-  verification: {
-    google: "I6wBAERuML0GEQrEUsR6XUw-z8BPUTvVP_w6NBfjciY",
-  },
-
-  openGraph: {
-    title: "Excel Pro GH | Websites & Excel Systems",
-
-    description:
-      "Save time and grow your business with automated websites and Excel systems.",
-
-    url: "https://excelprogh.vercel.app",
-
-    siteName: "Excel Pro GH",
-
-    locale: "en_GH",
-
-    type: "website",
-export const metadata: Metadata = {
-  title: "Excel Pro GH | Kenny Murray - 7 Systems - Ghana",
-  description:
-    "We build business systems: automated, offline, no subscription — from data cleaning that saves 96% time (4hrs → 12min) to e-commerce websites & 24/7 customer support teams. 📧 Email:contact.excelprogh@gmail.com 📞 Phone/WhatsApp: +233 548097756",
   manifest: "/manifest.json",
   verification: {
     google: "I6wBAERuML0GEQrEUsR6XUw-z8BPUTvVP_w6NBfjciY",
+  },
+  openGraph: {
+    title: "Excel Pro GH | Websites & Excel Systems",
+    description:
+      "Save time and grow your business with automated websites and Excel systems.",
+    url: "https://excelprogh.vercel.app",
+    siteName: "Excel Pro GH",
+    locale: "en_GH",
+    type: "website",
   },
 };
 
