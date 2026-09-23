@@ -4,8 +4,10 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Excel Pro GH | Websites, Excel Automation & Data Solutions in Ghana",
+
   description:
-    "We build automated, offline‑friendly business systems for SMEs and entrepreneurs — from e‑commerce sites to Excel automation, data cleaning, and support teams.",
+    "We build automated, offline-friendly business systems for SMEs and entrepreneurs — from e-commerce sites to Excel automation, data cleaning, and support teams.",
+
   keywords: [
     "Excel automation Ghana",
     "website development Ghana",
@@ -13,41 +15,61 @@ export const metadata: Metadata = {
     "business systems",
     "Accra",
   ],
+
+  verification: {
+    google: "I6wBAERuML0GEQrEUsR6XUw-z8BPUTvVP_w6NBfjciY",
+  },
+
   openGraph: {
     title: "Excel Pro GH | Websites & Excel Systems",
+
     description:
       "Save time and grow your business with automated websites and Excel systems.",
+
     url: "https://excelprogh.vercel.app",
+
     siteName: "Excel Pro GH",
+
     locale: "en_GH",
+
     type: "website",
   },
+
   manifest: "/manifest.json",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
+
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RWN8J9ZMG4"
           strategy="afterInteractive"
         />
+
         <Script id="ga-excelpro" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-RWN8J9ZMG4');
+
+            function gtag() {
+              window.dataLayer.push(arguments);
+            }
+
+            gtag("js", new Date());
+            gtag("config", "G-RWN8J9ZMG4");
           `}
         </Script>
       </head>
-      <body className="bg-white text-[#070f26]">{children}</body>
+
+      <body className="bg-white text-[#070f26]">
+        {children}
+      </body>
     </html>
   );
 }
