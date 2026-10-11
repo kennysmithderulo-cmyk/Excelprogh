@@ -5,31 +5,31 @@ import Link from "next/link";
 
 const portfolio = [
   {
-    title: "5-7 Hair Lounge",
-    desc: "E-commerce hair store with more than 100 products.",
-    tag: "Website Development",
-    link: "https://5-7hair-lounge.vercel.app",
-    image: "/hair-lounge.jpg",
+    title: "Excel Pro GH",
+    desc: "Main business platform - Excel & Website training, SME solutions, Spintex, Accra.",
+    tag: "Main Platform",
+    link: "https://excelprogh.vercel.app",
+    image: "/website-dev.jpg",
   },
   {
     title: "Betslip Analyser",
-    desc: "A website that helps users check betting slips for risk.",
+    desc: "A website that helps users check betting slips for risk and calculate winnings.",
     tag: "Web Application",
     link: "https://betslip-analyser.vercel.app",
     image: "/betslip.jpg",
   },
   {
-    title: "Budget Tracker",
-    desc: "An income and expense tracking system for small businesses.",
-    tag: "Excel Automation",
-    link: "#contact",
-    image: "/budget-tracker.jpg",
+    title: "5-7 Hair Lounge",
+    desc: "E-commerce hair store with more than 100 products, cart, and WhatsApp ordering.",
+    tag: "Website Development",
+    link: "https://5-7hair-lounge.vercel.app",
+    image: "/hair-lounge.jpg",
   },
   {
-    title: "Inventory & Invoice System",
-    desc: "A stock, sales, and invoice management system.",
-    tag: "Business Automation",
-    link: "#contact",
+    title: "Anchor Bolt Company Limited",
+    desc: "Corporate website for industrial fasteners & construction supply company.",
+    tag: "Corporate Website",
+    link: "https://anchor-bolt-company-limited.vercel.app",
     image: "/inventory-invoice.jpg",
   },
 ];
@@ -45,8 +45,7 @@ export default function PortfolioPage() {
           Examples of what we build.
         </h1>
         <p className="mt-3 max-w-3xl text-[#070f26]/80">
-          A few projects that show how we combine simple design with practical
-          functionality.
+          4 live projects - all deployed on Vercel. Click to view.
         </p>
       </section>
 
@@ -77,18 +76,28 @@ export default function PortfolioPage() {
                 <p className="mt-2 text-sm leading-6 text-[#070f26]/80">
                   {project.desc}
                 </p>
+                <p className="mt-3 text-xs font-bold text-[#070f26] underline group-hover:text-black">
+                  {project.link.replace("https://", "")} →
+                </p>
               </div>
             </a>
           ))}
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 flex gap-3">
           <Link
             href="/request"
             className="inline-flex rounded-lg bg-[#f4c542] px-6 py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]"
           >
             Start Your Project
           </Link>
+          <a
+            href="https://wa.me/233548097756"
+            target="_blank"
+            className="inline-flex rounded-lg border border-[#070f26] px-6 py-3 font-bold text-[#070f26]"
+          >
+            WhatsApp: +233 54 809 7756
+          </a>
         </div>
       </section>
     </PageWrapper>
