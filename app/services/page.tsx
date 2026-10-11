@@ -4,7 +4,7 @@ import { PageWrapper } from "@/components/PageWrapper";
 import Image from "next/image";
 import Link from "next/link";
 
-const services = [
+const services: any[] = [
   {
     category: "For Shops & Online Sellers",
     items: [
@@ -83,7 +83,7 @@ const services = [
       },
       {
         title: "5-7 Hair Lounge",
-        desc: "Modern website for a beauty salon - services showcase, gallery, booking, and WhatsApp contact. Built for a Ghanaian hair & beauty brand.",
+        desc: "Modern website for a beauty salon - services showcase, gallery, booking, and WhatsApp contact.",
         tag: "Salon Website",
         highlight: "Beauty & Lifestyle Business",
         image: "/customer-support.jpg",
@@ -91,7 +91,7 @@ const services = [
       },
       {
         title: "Anchor Bolt Company Limited",
-        desc: "Corporate website for industrial fasteners and construction supply company. Product catalog, quote request, and company profile.",
+        desc: "Corporate website for industrial fasteners and construction supply company.",
         tag: "Corporate Site",
         highlight: "Industrial & B2B",
         image: "/inventory-invoice.jpg",
