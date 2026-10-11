@@ -12,10 +12,10 @@ const highlights = [
 const portfolioHighlights: any[] = [
   {
     title: "Excel Pro GH",
-    desc: "Main platform - Excel & Website training, SME solutions.",
+    desc: "Main platform - Excel & Website training, SME solutions, Spintex.",
     tag: "Main Platform",
     link: "https://excelprogh.vercel.app",
-    image: "/website-dev.jpg",
+    image: "/excelprogh.jpg",
   },
   {
     title: "Betslip Analyser",
@@ -36,7 +36,7 @@ const portfolioHighlights: any[] = [
     desc: "Corporate site for industrial fasteners & construction supply.",
     tag: "Corporate Website",
     link: "https://anchor-bolt-company-limited.vercel.app",
-    image: "/inventory-invoice.jpg",
+    image: "/anchor-bolt-cover.jpg",
   },
 ];
 
@@ -56,8 +56,7 @@ export default function HomePage() {
           Simple digital systems that help your business save time and grow.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#070f26]/70 sm:text-lg">
-          We build professional websites, Excel automation systems, dashboards,
-          and operational support for small and growing businesses in Ghana.
+          We build professional websites, Excel automation systems, dashboards, and operational support for small and growing businesses in Ghana.
         </p>
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
           <Link href="/request" className="rounded-lg bg-[#f4c542] px-6 py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]">
@@ -92,6 +91,11 @@ export default function HomePage() {
               </div>
             </a>
           ))}
+        </div>
+        <div className="mt-8">
+          <Link href="/portfolio" className="inline-flex rounded-lg border border-[#070f26]/25 px-5 py-3 font-semibold text-[#070f26] hover:bg-[#070f26]/5">
+            View full portfolio
+          </Link>
         </div>
       </section>
 
