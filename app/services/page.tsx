@@ -120,4 +120,41 @@ export default function ServicesPage() {
         <div className="space-y-12">
           {services.map((group) => (
             <div key={group.category}>
-              <h2 className="mb-4 text-2xl font-semibold text
+              <h2 className="mb-4 text-2xl font-semibold text-[#070f26]">
+                {group.category}
+              </h2>
+              <div className="grid gap-5 sm:grid-cols-2">
+                {group.items.map((service: any) => (
+                  <div key={service.title} className="overflow-hidden rounded-2xl border border-[#070f26]/10 bg-white">
+                    <div className="relative h-40 w-full bg-[#f4f4f4]">
+                      <Image src={service.image} alt={service.title} fill className="object-cover" />
+                    </div>
+                    <div className="p-5">
+                      <span className="rounded-full bg-[#f4c542] px-3 py-1 text-xs font-bold text-[#070f26]">
+                        {service.tag}
+                      </span>
+                      <h3 className="mt-3 text-xl font-bold text-[#070f26]">{service.title}</h3>
+                      <p className="mt-2 leading-7 text-[#070f26]/80">{service.desc}</p>
+                      <p className="mt-3 text-sm text-green-700">{service.highlight}</p>
+                      {service.link && (
+                        <a href={service.link} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex rounded-lg bg-[#070f26] px-4 py-2 text-sm font-bold text-white hover:bg-black">
+                          View Live →
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10">
+          <Link href="/request" className="inline-flex rounded-lg bg-[#f4c542] px-6 py-3 font-bold text-[#070f26] hover:bg-[#ffd95c]">
+            Request a Quote
+          </Link>
+        </div>
+      </section>
+    </PageWrapper>
+  );
+}
