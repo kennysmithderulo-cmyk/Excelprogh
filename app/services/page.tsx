@@ -11,14 +11,14 @@ const services = [
       {
         title: "E-commerce & Product Websites",
         desc: "Mobile-friendly online stores and product websites with WhatsApp orders and simple management.",
-       
+        tag: "Online Store",
         highlight: "Ideal for fashion, hair, cosmetics, and retail businesses.",
         image: "/website-dev.jpg",
       },
       {
         title: "Inventory, Sales & Invoicing",
         desc: "Track stock, sales, expenses, invoices, and receipts using a practical Excel or Google Sheets system.",
-        
+        tag: "Best Seller",
         highlight: "Suitable for shops, pharmacies, and small warehouses.",
         image: "/inventory-invoice.jpg",
       },
@@ -30,14 +30,14 @@ const services = [
       {
         title: "Client Records & Appointments",
         desc: "Simple systems for recording clients, managing appointments, and tracking payments.",
-        
+        tag: "Service Ops",
         highlight: "Reduce lost records and missed follow-ups.",
         image: "/customer-support.jpg",
       },
       {
         title: "Reports & Business Dashboards",
         desc: "Clear dashboards for sales, expenses, profit, and key performance indicators.",
-        
+        tag: "Analytics",
         highlight: "Understand your business without opening multiple files.",
         image: "/data-analytics.jpg",
       },
@@ -49,16 +49,29 @@ const services = [
       {
         title: "Data Cleaning & Preparation",
         desc: "Convert messy sales, bank, mobile-money, and customer data into clean, usable records.",
-        
+        tag: "Data Ops",
         highlight: "Save time and reduce errors in your reports.",
         image: "/data-cleaning.jpg",
       },
       {
         title: "Virtual Assistant & Customer Support",
         desc: "Get help with administration, research, email, chat support, and daily business operations.",
-        
+        tag: "Support",
         highlight: "Flexible support for growing businesses.",
         image: "/virtual-assistant.jpg",
+      },
+    ],
+  },
+  {
+    category: "Live Portfolio Project",
+    items: [
+      {
+        title: "Betslip Analyser",
+        desc: "Smart betslip analysis tool for Ghanaian punters. Analyse odds, calculate winnings, and make informed decisions. Built with Next.js.",
+        tag: "Live Project",
+        highlight: "Live at https://betslip-analyser.vercel.app - Click to view",
+        image: "/website-dev.jpg",
+        link: "https://betslip-analyser.vercel.app",
       },
     ],
   },
@@ -76,7 +89,7 @@ export default function ServicesPage() {
         </h1>
         <p className="mt-3 max-w-3xl text-[#070f26]/80">
           Choose a ready-made solution or contact us for a custom system based
-          on the way your business operates.
+          on the way your business operates. Support: +233 54 809 7756
         </p>
       </section>
 
@@ -89,12 +102,11 @@ export default function ServicesPage() {
               </h2>
 
               <div className="grid gap-5 sm:grid-cols-2">
-                {group.items.map((service) => (
+                {group.items.map((service: any) => (
                   <div
                     key={service.title}
                     className="overflow-hidden rounded-2xl border border-[#070f26]/10 bg-white"
                   >
-                    {/* Service image */}
                     <div className="relative h-40 w-full bg-[#f4f4f4]">
                       <Image
                         src={service.image}
@@ -104,7 +116,6 @@ export default function ServicesPage() {
                       />
                     </div>
 
-                    {/* Service content */}
                     <div className="p-5">
                       <span className="rounded-full bg-[#f4c542] px-3 py-1 text-xs font-bold text-[#070f26]">
                         {service.tag}
@@ -118,6 +129,16 @@ export default function ServicesPage() {
                       <p className="mt-3 text-sm text-green-700">
                         {service.highlight}
                       </p>
+                      {service.link && (
+                        <a
+                          href={service.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-4 inline-flex rounded-lg bg-[#070f26] px-4 py-2 text-sm font-bold text-white hover:bg-black"
+                        >
+                          View Live → betslip-analyser.vercel.app
+                        </a>
+                      )}
                     </div>
                   </div>
                 ))}
