@@ -11,14 +11,14 @@ const services = [
       {
         title: "E-commerce & Product Websites",
         desc: "Mobile-friendly online stores and product websites with WhatsApp orders and simple management.",
-        tag: "From GHS 500",
+       
         highlight: "Ideal for fashion, hair, cosmetics, and retail businesses.",
         image: "/website-dev.jpg",
       },
       {
         title: "Inventory, Sales & Invoicing",
         desc: "Track stock, sales, expenses, invoices, and receipts using a practical Excel or Google Sheets system.",
-        tag: "From GHS 200",
+        
         highlight: "Suitable for shops, pharmacies, and small warehouses.",
         image: "/inventory-invoice.jpg",
       },
@@ -30,14 +30,14 @@ const services = [
       {
         title: "Client Records & Appointments",
         desc: "Simple systems for recording clients, managing appointments, and tracking payments.",
-        tag: "From GHS 250",
+        
         highlight: "Reduce lost records and missed follow-ups.",
         image: "/customer-support.jpg",
       },
       {
         title: "Reports & Business Dashboards",
         desc: "Clear dashboards for sales, expenses, profit, and key performance indicators.",
-        tag: "From GHS 250",
+        
         highlight: "Understand your business without opening multiple files.",
         image: "/data-analytics.jpg",
       },
@@ -49,14 +49,14 @@ const services = [
       {
         title: "Data Cleaning & Preparation",
         desc: "Convert messy sales, bank, mobile-money, and customer data into clean, usable records.",
-        tag: "From GHS 100",
+        
         highlight: "Save time and reduce errors in your reports.",
         image: "/data-cleaning.jpg",
       },
       {
         title: "Virtual Assistant & Customer Support",
         desc: "Get help with administration, research, email, chat support, and daily business operations.",
-        tag: "From GHS 350/month",
+        
         highlight: "Flexible support for growing businesses.",
         image: "/virtual-assistant.jpg",
       },
