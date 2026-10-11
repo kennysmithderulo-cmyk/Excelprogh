@@ -15,7 +15,7 @@ const portfolio = [
     title: "Betslip Analyser",
     desc: "A website that helps users check betting slips for risk.",
     tag: "Web Application",
-    link: "https://betslip-analyser-check.vercel.app",
+    link: "https://betslip-analyser.vercel.app",
     image: "/betslip.jpg",
   },
   {
